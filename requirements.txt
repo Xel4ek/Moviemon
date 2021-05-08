@@ -1,0 +1,3 @@
+pip
+django
+psycopg2

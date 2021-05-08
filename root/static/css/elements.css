@@ -1,0 +1,116 @@
+.round-button {
+    height: 45px;
+    width: 45px;
+    border-radius: 50%;
+    background: linear-gradient(-45deg, rgba(144, 21, 105, 0.81), rgba(196, 43, 192, 0.15));
+    box-shadow: 3px 4px 5px 0 rgba(0, 0, 0, .31), -5px -5px 4px 0 rgba(255, 255, 255, .26);
+    position: relative;
+}
+
+.line-button {
+        transform: rotate(
+332deg
+);
+    height: 11px;
+    width: 61px;
+    border-radius: 10px;
+    background: linear-gradient(
+            360deg, rgba(74, 65, 198, 0.81), rgba(11, 35, 85, 0.15));
+    box-shadow: 3px 4px 5px 0 rgba(0, 0, 0, .31), -5px -5px 4px 0 rgba(255, 255, 255, .26);
+    position: relative;
+}
+
+.line-button::after {
+    content: attr(data-label);
+    position: absolute;
+    font-family: 'Permanent Marker', cursive;
+    font-size: 16px;
+    color: #1f1e56;
+    text-shadow: -2px -1px 3px #7e7e7e78;
+        left: 10px;
+    bottom: -19px;
+}
+
+.round-button::after {
+    content: attr(data-label);
+    position: absolute;
+    font-family: 'Permanent Marker', cursive;
+    transform: rotate(289deg);
+    font-size: 36px;
+    color: #1f1e56;
+    text-shadow: -2px -1px 3px #7e7e7e78;
+    left: 47px;
+    bottom: -1px;
+}
+
+.button__block-3 {
+    display: flex;
+    gap: 30px;
+     flex-direction: column;
+    transform: rotate(63deg);
+}
+
+.button__block-2 {
+    display: flex;
+
+    gap: 30px;
+}
+.button__block-1 {
+    display: grid;
+  grid: repeat(3, 40px) / repeat(3, 40px)
+}
+.big-button {
+    background: #2e2a2a;
+    position: relative;
+}
+.big-button-up::after {
+    content: '';
+    border: 13px solid transparent;
+    border-top: 17px solid green;
+}
+.big-button-down::after {
+    content: '';
+    position: absolute;
+    left: 7px;
+    top: 13px;
+    border: 13px solid transparent;
+    border-top: 19px solid #636563;
+}
+.big-button-up::after {
+    content: '';
+    transform: rotate(180deg);
+    position: absolute;
+    left: 7px;
+    top: -5px;
+    border: 13px solid transparent;
+    border-top: 19px solid #636563;
+}
+
+.big-button-left::after {
+    content: '';
+    transform: rotate(90deg);
+    position: absolute;
+     left: -3px;
+    top: 5px;
+    border: 13px solid transparent;
+    border-top: 19px solid #636563;
+}
+
+.big-button-right::after {
+    content: '';
+    transform: rotate(-90deg);
+    position: absolute;
+        left: 16px;
+    top: 5px;
+    border: 13px solid transparent;
+    border-top: 19px solid #636563;
+}
+
+.big-button-center::after {
+    content: '';
+    position: absolute;
+        left: 6px;
+    top: 6px;
+    border: 14px solid #636563;
+    border-radius: 50%;
+}

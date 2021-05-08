@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{title|default:'Game'}}</title>
+    <link rel="stylesheet" href="{% static 'css/base.css' %}" />
+    <link rel="shortcut icon" type="image/png" href="{% static 'favicon.ico' %}"/>
+</head>
+<body>
+<div class="wrapper">
+    <div class="content element">
+        <main class="neumorphic--pressed">
+            {% block content %}
+            {% endblock content %}
+        </main>
+        <div class="controls">
+            <div class="button__block-1">
+                <div></div>
+                <div class="big-button  big-button-up"></div>
+                <div></div>
+                <div class="big-button big-button-left"></div>
+                <div class="big-button  big-button-center"></div>
+                <div class="big-button  big-button-right"></div>
+                <div></div>
+                <div class="big-button  big-button-down"></div>
+                <div></div>
+
+            </div>
+            <div class="button__block-2">
+                <div class="line-button" data-label="select"></div>
+                <div class="line-button" data-label="start"></div>
+            </div>
+            <div class="button__block-3">
+                <div class="round-button" data-label="A"></div>
+                <div class="round-button" data-label="B"></div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

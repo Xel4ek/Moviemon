@@ -1,0 +1,30 @@
+.wrapper {
+    max-width: 600px;
+    margin: auto;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.content {
+    width: 600px;
+    height: 650px;
+    margin: auto;
+    border-radius: 5px;
+      background: linear-gradient(-45deg, rgba(125, 160, 70, 0.22), rgba(64, 116, 28, 0.25));
+}
+
+main {
+    border-radius: 5px;
+    background: green;
+    margin: 20px;
+    height: 450px;
+}
+
+.controls {
+    display: flex;
+    height: 116px;
+    justify-content: space-around;
+    align-items: center;
+}

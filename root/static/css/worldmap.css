@@ -2,8 +2,30 @@
     height: 450px;
     display: grid;
     grid: repeat(var(--sizeX), auto) / repeat(var(--sizeY), auto);
+    background: url("../img/B062NZ-IEAAOhd9.jpeg") 0 100% no-repeat;
+    background-size: contain;
 }
 .worldmap .player {
-    background: url("../img/player.png") 100% 100% no-repeat;
+    background: url("../img/player.png") 0 100% no-repeat;
+    background-size: contain;
+}
+.worldmap > div {
+    position: relative;
+    border: 1px dashed #575757;
+}
+
+.worldmap .ball {
+    margin-left: auto;
+    width: 50%;
+    height: 50%;
+    background: url(../img/pokemon.png) 100% 100% no-repeat;
+    background-size: contain;
+}
+
+.worldmap .pokemon {
+    margin-left: auto;
+    width: 50%;
+    height: 50%;
+    background: url(../img/monsters/33976-3-blue-monster-hd.png) 100% 100% no-repeat;
     background-size: contain;
 }

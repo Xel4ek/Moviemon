@@ -10,7 +10,14 @@
 {% block content %}
 <div class="worldmap">
     {% for item in settings.map_list %}
-        <div id="cell-{{ item.x }}-{{ item.y }}" {% if item.player %} class="player" {% endif %}></div>
+        <div id="cell-{{ item.x }}-{{ item.y }}" {% if item.player %} class="player" {% endif %}>
+        {% if item.pokemon %}
+            <div class="pokemon"></div>
+        {% endif %}
+        {% if item.ball %}
+            <div class="ball"></div>
+        {% endif %}
+        </div>
     {% endfor %}
 </div>
 {% endblock content %}

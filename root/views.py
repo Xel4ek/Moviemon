@@ -9,6 +9,8 @@ must be reinitialized with the Settings parameters and the Moviemons must
 be requested once again.
 ◦ B: link to the Load page.
 '''
+import random
+
 from .models import Supplier
 from .tools import Render
 
@@ -37,8 +39,9 @@ def worldmap(request):
 
     def is_player(n):
         return n % max_x == player[0] and n // max_y == player[1]
-
-    map_list = [{'x': n % max_x, 'y': n // max_y, 'player': is_player(n)} for n in range(max_x * max_y)]
+    def coin():
+        return random.choice([True, False])
+    map_list = [{'x': n % max_x, 'y': n // max_y, 'player': is_player(n), 'ball': coin(), 'pokemon': coin()} for n in range(max_x * max_y)]
     settings = {**default, 'map_list': map_list}
 
     return Render(request, 'worldmap', {'settings': settings})

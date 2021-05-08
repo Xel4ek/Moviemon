@@ -214,15 +214,15 @@ class Supplier:
     def load():
         try:
             with open('db.db', 'r') as f:
-                db.db = pickle.load(f)
+                return pickle.load(f)
         except Exception as e:
             logging.error(e)
 
     @staticmethod
-    def dump():
+    def dump(game):
         try:
             with open('db.db', 'w')as f:
-                pickle.dump(db.db, f)
+                pickle.dump(game, f)
         except Exception as e:
             logging.error(e)
 

@@ -1,0 +1,14 @@
+.welcome{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    text-align: center;
+    font-size: 30px;
+    font-weight: bold;
+}
+.welcome .title {
+    font-family: 'Pokemon-Hollow', monospace;
+    font-size: 100px;
+    padding-bottom: 100px
+}

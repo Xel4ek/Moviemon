@@ -17,7 +17,8 @@
 
 main {
     border-radius: 5px;
-    background: green;
+    background: #5e6b14;
+    color: #5b075e;
     margin: 20px;
     height: 450px;
 }

@@ -41,7 +41,8 @@ def worldmap(request):
         return n % max_x == player[0] and n // max_y == player[1]
     def coin():
         return random.choice([True, False])
-    map_list = [{'x': n % max_x, 'y': n // max_y, 'player': is_player(n), 'ball': coin(), 'pokemon': coin()} for n in range(max_x * max_y)]
+    # 'x': n % max_x, 'y': n // max_y,
+    map_list = [{'player': is_player(n), 'ball': coin(), 'pokemon': coin()} for n in range(max_x * max_y)]
     settings = {**default, 'map_list': map_list}
 
     return Render(request, 'worldmap', {'settings': settings})

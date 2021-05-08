@@ -3,6 +3,7 @@
 @import "plastic.css";
 @import "elements.css";
 @import "worldmap.css";
+@import "welcome.css";
 @import url('https://fonts.googleapis.com/css2?family=Major+Mono+Display&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap');
 @font-face {

@@ -17,28 +17,41 @@ from .tools import Render
 
 def index(request):
     help_list = ['a: new game', 'b: load']
-    return Render(request, context={'help': help_list}).render()
+    actions = {'a': {'url': 'worldmap', 'par': 'new'}, 'b': {'url': 'load_game', 'par': 0}}
+    return Render(request, context={'help': help_list}, actions=actions).render()
 
 
 def save_game(request, slot=0):
     def is_selected(i):
         return slot % 3 == i
+
     # ’Slot A’, ’Slot B’ and ’Slot C’
-    slots = [{'text':'slot a: 12/15', 'selected': is_selected(0)}, {'text': 'slot b: 11/21', 'selected': is_selected(1)},
-             {'text':'slot c: free', 'selected': is_selected(2)}]
+    slots = [{'text': 'slot a: 12/15', 'selected': is_selected(0)},
+             {'text': 'slot b: 11/21', 'selected': is_selected(1)},
+             {'text': 'slot c: free', 'selected': is_selected(2)}]
     help_list = ['a: save', 'b: cancel']
     return Render(request, 'save', context={'help': help_list, 'slots': slots, 'selected': slot % 3}).render()
 
 
-def load_game(request):
-    pass
+def load_game(request, slot=0):
+    def is_selected(i):
+        return slot % 3 == i
+
+    # ’Slot A’, ’Slot B’ and ’Slot C’
+    slots = [{'text': 'slot a: 12/15', 'selected': is_selected(0)},
+             {'text': 'slot b: 11/21', 'selected': is_selected(1)},
+             {'text': 'slot c: free', 'selected': is_selected(2)}]
+    help_list = ['a: save', 'b: cancel']
+    actions = {'up': {'url': 'load_game', 'par': (slot + 1) % 3}, 'down': {'url': 'load_game', 'par': (slot - 1) % 3}}
+    return Render(request, 'save', context={'help': help_list, 'slots': slots, 'selected': slot % 3},
+                  actions=actions).render()
 
 
 def moviemon(request):
     pass
 
 
-def worldmap(request):
+def worldmap(request, new=''):
     default = Supplier.load_default_settings()
     max_x = default.get('grid_size_x')
     max_y = default.get('grid_size_y')
@@ -46,11 +59,13 @@ def worldmap(request):
 
     def is_player(n):
         return n % max_x == player[0] and n // max_y == player[1]
+
     def coin():
         return random.choice([True, False])
+
     # 'x': n % max_x, 'y': n // max_y,
     map_list = [{'player': is_player(n), 'ball': coin(), 'pokemon': coin()} for n in range(max_x * max_y)]
-    settings = {**default, 'map_list': map_list}
+    settings = {**default, 'map_list': map_list, 'balls': 6, 'message': ['Lorem dwadaw ', 'dawdawdawdaw']}
 
     return Render(request, 'worldmap', {'settings': settings})
 
@@ -71,4 +86,3 @@ def options(request):
     # ’A - Save’, ’B - Quit’ as well as ’start - cancel’
     help_list = ['a: save', 'b: quit', 'start: cancel']
     return Render(request, context={'help': help_list}).render()
-

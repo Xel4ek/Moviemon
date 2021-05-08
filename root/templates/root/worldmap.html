@@ -19,5 +19,9 @@
         {% endif %}
         </div>
     {% endfor %}
+    <div class="balls">{{ settings.balls }} moveball(s)</div>
+    <div class="info"> {% for text in settings.message %}
+        <div>{{ text }}</div>
+    {% endfor %}</div>
 </div>
 {% endblock content %}

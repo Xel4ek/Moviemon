@@ -6,6 +6,8 @@
     <title>{{title|default:'Game'}}</title>
     <link rel="stylesheet" href="{% static 'css/base.css' %}" />
     <link rel="shortcut icon" type="image/png" href="{% static 'favicon.ico' %}"/>
+    {% block settings %}
+    {% endblock settings %}
 </head>
 <body>
 <div class="wrapper">

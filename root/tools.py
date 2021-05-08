@@ -1,18 +1,23 @@
 from django.shortcuts import render
 from django.template.loader import render_to_string
 
+from .models import Supplier
+
 '''
 actions = {up?:<url>, down?:<url>, left?:<url>, right?:<url>, 
             start?:<url>, select?: <url>,
             a?: <url>, b?: <url>}
-url = {url:route_name, par?: <any>, title?: <string>}
+url = {url:route_name, par?: <any>, title?: <string>, query? <dict>}
 '''
+
+
 class Render:
-    def __init__(self, request, route='index', context=None, actions=None):
+    def __init__(self, request, route='index', context=None, actions=None,):
         self.request = request
         self.route = route
         self.actions = actions if actions else {}
         self.context = context if context else {}
+        # self.settings = Supplier.load_default_settings()
 
     def add_context(self, context: dict):
         self.context = {*self.context, *context}

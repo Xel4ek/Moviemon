@@ -9,6 +9,7 @@ must be reinitialized with the Settings parameters and the Moviemons must
 be requested once again.
 ◦ B: link to the Load page.
 '''
+from .models import Supplier
 from .tools import Render
 
 
@@ -29,7 +30,18 @@ def moviemon(request):
 
 
 def worldmap(request):
-    pass
+    default = Supplier.load_default_settings()
+    max_x = default.get('grid_size_x')
+    max_y = default.get('grid_size_y')
+    player = default.get('start_x'), default.get('start_y')
+
+    def is_player(n):
+        return n % max_x == player[0] and n // max_y == player[1]
+
+    map_list = [{'x': n % max_x, 'y': n // max_y, 'player': is_player(n)} for n in range(max_x * max_y)]
+    settings = {**default, 'map_list': map_list}
+
+    return Render(request, 'worldmap', {'settings': settings})
 
 
 def battle(request):

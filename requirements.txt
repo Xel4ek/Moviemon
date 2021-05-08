@@ -1,3 +1,1 @@
-pip
-django
-psycopg2
+django>=3.2.2

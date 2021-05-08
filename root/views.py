@@ -9,10 +9,8 @@ must be reinitialized with the Settings parameters and the Moviemons must
 be requested once again.
 ◦ B: link to the Load page.
 '''
-from django.http import Http404, HttpResponse
-from django.shortcuts import render
+from .tools import Render
 
 
-# Create your views here.
 def index(request):
-    return render(request, 'root/index.html')
+    return Render(request).render()

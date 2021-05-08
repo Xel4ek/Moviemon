@@ -16,7 +16,9 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from . import views
-
+app_name = 'root'
 urlpatterns = [
     path('', views.index, name='index'),
+    path('super_test', views.index, name='super_test'),
+
 ]

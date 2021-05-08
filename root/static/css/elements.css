@@ -123,3 +123,9 @@
 .hoverable:hover, .hoverable:active  {
      box-shadow: 1px 1px 1px 0 rgba(0, 0, 0, .31), -1px -1px 1px 0 rgba(255, 255, 255, .26);
 }
+
+.disabled {
+    cursor: pointer;
+    background: linear-gradient(
+            360deg, rgba(167, 167, 167, 0.81), rgba(80, 80, 80, 0.15));
+}

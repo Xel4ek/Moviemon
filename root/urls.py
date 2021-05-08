@@ -19,8 +19,8 @@ from . import views
 app_name = 'root'
 urlpatterns = [
     path('', views.index, name='index'),
-    path('worldmap/', views.worldmap, name='worldmap'),
     path('worldmap/<str:new>', views.worldmap, name='worldmap'),
+    path('worldmap/', views.worldmap, name='worldmap'),
     path('moviedex/', views.moviedex, name='moviedex'),
     path('options/', views.options, name='options'),
     path('options/save_game/<int:slot>', views.save_game, name='save_game'),

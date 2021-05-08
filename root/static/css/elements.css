@@ -114,3 +114,12 @@
     border: 14px solid #636563;
     border-radius: 50%;
 }
+
+.hoverable {
+    cursor: pointer;
+    transition: all .3s;
+
+}
+.hoverable:hover, .hoverable:active {
+     box-shadow: 1px 1px 1px 0 rgba(0, 0, 0, .31), -1px -1px 1px 0 rgba(255, 255, 255, .26);
+}

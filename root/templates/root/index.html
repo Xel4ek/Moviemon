@@ -2,7 +2,8 @@
 {% block content %}
     <div class="welcome">
     <div class="title">Moviemon</div>
-        <div>a: new game</div>
-        <div>b: load</div>
+        {% for item in help %}
+        <div>{{ item }}</div>
+        {% endfor %}
     </div>
 {% endblock content %}

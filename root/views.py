@@ -16,11 +16,18 @@ from .tools import Render
 
 
 def index(request):
-    return Render(request).render()
+    help_list = ['a: new game', 'b: load']
+    return Render(request, context={'help': help_list}).render()
 
 
-def save_game(request):
-    pass
+def save_game(request, slot=0):
+    def is_selected(i):
+        return slot % 3 == i
+    # ’Slot A’, ’Slot B’ and ’Slot C’
+    slots = [{'text':'slot a: 12/15', 'selected': is_selected(0)}, {'text': 'slot b: 11/21', 'selected': is_selected(1)},
+             {'text':'slot c: free', 'selected': is_selected(2)}]
+    help_list = ['a: save', 'b: cancel']
+    return Render(request, 'save', context={'help': help_list, 'slots': slots, 'selected': slot % 3}).render()
 
 
 def load_game(request):
@@ -61,4 +68,7 @@ def detail(request):
 
 
 def options(request):
-    pass
+    # ’A - Save’, ’B - Quit’ as well as ’start - cancel’
+    help_list = ['a: save', 'b: quit', 'start: cancel']
+    return Render(request, context={'help': help_list}).render()
+

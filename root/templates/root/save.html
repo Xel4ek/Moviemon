@@ -1,0 +1,16 @@
+{% extends 'root/base.html'%}
+{% block content %}
+    <div class="welcome">
+    <div class="title" style="padding-bottom: 50px">Moviemon</div>
+        <div style="padding-bottom: 45px;">
+            {% for item in slots %}
+                <div {% if item.selected %} class="selected" {% endif %}>{{ item.text }}</div>
+            {% endfor %}
+        </div>
+        <div>
+            {% for item in help %}
+                <div>{{ item }}</div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock content %}

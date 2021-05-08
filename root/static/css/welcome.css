@@ -12,3 +12,7 @@
     font-size: 100px;
     padding-bottom: 100px
 }
+.welcome .selected {
+    filter: hue-rotate(317deg);
+    font-size: 39px;
+}

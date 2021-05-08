@@ -69,7 +69,7 @@ def worldmap(request, new=''):
     # TODO: set moviemon_id on move
     moviemon_id = None
     actions = {
-        'up': {'url': 'worldmap', 'par': 'up'},
+        'up': {'url': 'worldmap', 'par': 'up/1'},
         'down': {'url': 'worldmap', 'par': 'down'},
         'left': {'url': 'worldmap', 'par': 'left'},
         'right': {'url': 'worldmap', 'par': 'right'},
@@ -92,15 +92,21 @@ def battle(request, moviemon_id, throw=None):
     actions = {
         'start': {'url': 'options'},
         'select': {'url': 'moviedex'},
-        # TODO: A: Only if a Moviemon is flushed out: Link to Battle page of the battle against this Moviemon.
         'a': {'url': 'battle', 'par': 1},
         'b': {'url': 'load_game'}
     }
     return Render(request, 'battle', actions=actions)
 
 
-def moviedex(request):
-    pass
+def moviedex(request, moviemon_id):
+    actions = {
+        'left': {'url': 'worldmap', 'par': 'left'},
+        'right': {'url': 'worldmap', 'par': 'right'},
+        'start': {'url': 'options'},
+        'select': {'url': 'worldmap'},
+        'a': {'url': 'moviedex', 'par': moviemon_id} if moviemon_id else None,
+    }
+    return Render(request, 'worldmap', {'settings': settings}, actions=actions)
 
 
 def detail(request):

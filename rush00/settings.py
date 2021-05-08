@@ -38,10 +38,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'root',
-    'battle',
-    'moviedex',
-    'options',
-    'worldmap'
 ]
 
 MIDDLEWARE = [

@@ -19,6 +19,13 @@ from . import views
 app_name = 'root'
 urlpatterns = [
     path('', views.index, name='index'),
+    path('worldmap/', views.worldmap, name='worldmap'),
+    path('moviedex/', views.moviedex, name='moviedex'),
+    path('options/', views.options, name='options'),
+    path('options/save_game/', views.save_game, name='save_game'),
+    path('options/load_game/', views.load_game, name='load_game'),
+    path('moviedex/<str:moviemon_id>', views.detail, name='detail'),
+    path('battle/<str:moviemon_id>', views.battle, name='battle'),
     path('super_test', views.index, name='super_test'),
 
 ]

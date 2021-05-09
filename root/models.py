@@ -34,6 +34,7 @@ class Supplier:
         'max_moviemons': 15,
         'max_balls': 30
     }
+
     _debug = False
     _remote_api = movies.get_movies_list(_settings.get('max_moviemons'))
     _game = None
@@ -92,6 +93,10 @@ class Supplier:
         return random.choice([filter(lambda x: x.moviemon and not x.moviemon.caught, Supplier._game().map.items)])
 
     @staticmethod
+    def get_caught():
+        return Supplier.game.caught_moviemons()
+
+    @staticmethod
     def new_game():
         return Supplier.load_default_settings()
         # Supplier._game = Game([Moviemon.from_movie(movie) for movie in Supplier._remote_api],
@@ -111,4 +116,4 @@ class Supplier:
 
     @staticmethod
     def get_movie():
-        pass
+        return Supplier._remote_api

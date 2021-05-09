@@ -1,0 +1,23 @@
+{% extends 'root/base.html' %}
+{% load static %}
+
+{% block title %}
+<title>MovieMon: Moviedex</title>
+{%endblock%}
+
+{% block content %}
+
+  <p>Moviedex</p>
+  <div>
+      {% for x in imgs %}
+          <img  height="100" src={{ x }}; />
+        {% endfor %}
+  </div>
+  <br/>
+  {% if empty %}
+    <div style="position:absolute;">Go and capture something! </div>
+  {% endif %}
+  <br/>
+
+
+{% endblock %}

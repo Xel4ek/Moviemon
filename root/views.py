@@ -11,7 +11,9 @@ be requested once again.
 '''
 import copy
 
-from .classes import Map
+from django.http import Http404
+
+from .classes import Map, Game
 from .models import Supplier
 from .tools import Render
 
@@ -125,19 +127,37 @@ def battle(request, moviemon_id):
                   {'moviemon': moviemon, 'massage': massage}, actions=actions)
 
 
-def moviedex(request, moviemon_id):
+def moviedex(request, moviemon_id=0):
+    listdex = Supplier.get_movie()
+    imgs = []
+    titles = []
+    for movie in listdex:
+        titles.append(movie['Title'])
+        imgs.append(movie['Poster'])
+    titles = listdex
     actions = {
-        'left': {'url': 'worldmap', 'par': 'left'},
-        'right': {'url': 'worldmap', 'par': 'right'},
-        'start': {'url': 'options'},
-        'select': {'url': 'worldmap'},
-        'a': {'url': 'moviedex', 'par': moviemon_id} if moviemon_id else None,
+        'a': {'url': 'detail'},
+        'b': {'url': 'options'}
     }
-    return Render(request, 'worldmap', {'settings': settings}, actions=actions)
-
-
-def detail(request):
+    return Render(request, 'moviedex', {'titles': titles, 'imgs': imgs}, actions=actions)
     pass
+
+
+def detail(request, match=0):
+    movies = Supplier.get_movie()
+    title = movies[0]['Title']
+    poster = movies[0]['Poster']
+    year = movies[0]['Year']
+    plot = movies[0]['Plot']
+    rating = movies[0]['imdbRating']
+    actions = {
+        'a': {'url': 'detail'},
+        'b': {'url': 'options'}
+    }
+    return Render(request, 'detail', {'title': title, 'poster': poster, 'year': year
+                                      , 'plot': plot, 'rating': rating}, actions=actions)
+
+
 
 
 def options(request):

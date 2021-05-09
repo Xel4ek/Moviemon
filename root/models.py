@@ -41,7 +41,6 @@ class Supplier:
     @staticmethod
     def info():
         files = [filename.split('\\')[-1].split('/')[-1] for filename in glob.glob("root/save_game/slot*.mmg")]
-        print(files)
         def get_file(slot):
             file = list(filter(lambda x: 'slot' + str(slot) in x, files))
             return '/'.join(file[0].split('.')[0].split('_')[1:3]) if len(file) else 'free'

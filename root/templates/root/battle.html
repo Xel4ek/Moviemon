@@ -3,7 +3,9 @@
     <div class="display battle">
         <div class="info_block">
             {% for text in massage %}
-                <div>{{ text }}</div>
+                {% if text %}
+                    <div>{{ text }}</div>
+                {% endif %}
             {% endfor %}
         </div>
         {% if moviemon.poster != 'N/A' %}

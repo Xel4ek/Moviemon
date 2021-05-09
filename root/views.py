@@ -44,7 +44,6 @@ def save_game(request, slot=0):
 
 
 def load_game(request, slot=0):
-
     def is_selected(i):
         return slot % 3 == ord(i) - ord('a')
 
@@ -86,7 +85,7 @@ def worldmap(request, new=None):
     if Supplier.game.count_caught_moviemons() == Supplier.game.count_moviemons():
         message = ['Congratulations!', 'Every moviemons was caught']
     if Supplier.game.balls == 0 and Supplier.game.remaining_balls() == 0:
-        message = ['Wasted!',  'You can continue the meaningless', 'existence, but the balls run out']
+        message = ['Wasted!', 'You can continue the meaningless', 'existence, but the balls run out']
     possibility = Supplier.game.can_move
     settings = {**default, 'map_list': map_list, 'balls': Supplier.game.count_balls(),
                 'message': message}
@@ -116,10 +115,12 @@ def battle(request, moviemon_id):
 
     moviemon = Supplier.game.moviemons.get(moviemon_id)
 
-    massage = ['hello',
+    massage = [ None if not fight else 'You caught it!' if Supplier.game.status(moviemon_id).caught else 'you missed!',
                'your strength: {}'.format(Supplier.game.get_strength()),
                'you have {} ball(s)'.format(Supplier.game.count_balls()),
-               'chance to win:{}%'.format(Supplier.game.chance(moviemon_id)), 'A:Launch movieball']
+               'enemy strength {}'.format(moviemon.rating),
+               'chance to win:{}%'.format(Supplier.game.chance(moviemon_id)),
+               'A:Launch movieball']
     return Render(request, 'battle',
                   {'moviemon': moviemon, 'massage': massage}, actions=actions)
 

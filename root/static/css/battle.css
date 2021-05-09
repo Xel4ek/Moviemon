@@ -8,11 +8,15 @@
 .battle:first-child{
     flex: 1 1 auto;
 }
+.info_block > div {
+    padding: 0 .4rem;
+}
 .battle .info_block {
     display: flex;
     flex-direction: column;
     text-align: center;
     height: 100%;
+    justify-content: space-around;
 }
 .battle .info_block:first-child {
     padding-bottom: .5rem;

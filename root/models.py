@@ -93,7 +93,7 @@ class Supplier:
 
     @staticmethod
     def get_strength():
-        return Supplier.game().strength()
+        return Supplier.game().get_strength()
 
     @staticmethod
     def get_movie():

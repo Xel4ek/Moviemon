@@ -108,8 +108,6 @@ def battle(request, moviemon_id):
         Supplier.game().fight(moviemon_id)
 
     actions = {
-        'start': {'url': 'options'},
-        'select': {'url': 'moviedex'},
         'a': {'url': 'battle', 'par': moviemon_id + '!'} if Supplier.game().count_balls() and
                                                             not Supplier.game().status(moviemon_id).caught else None,
         'b': {'url': 'worldmap'}
@@ -122,7 +120,7 @@ def battle(request, moviemon_id):
                'you have {} ball(s)'.format(Supplier.game().count_balls()),
                'enemy strength {}'.format(moviemon.rating),
                'chance to win:{}%'.format(Supplier.game().chance(moviemon_id)),
-               'A:Launch movieball' if not moviemon.caught else '',
+               'A:Launch movieball' if not moviemon.caught and Supplier.game().count_balls() != 0 else '',
                 'B: Back']
     return Render(request, 'battle',
                   {'moviemon': moviemon, 'massage': massage}, actions=actions)

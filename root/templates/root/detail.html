@@ -1,18 +1,17 @@
 {% extends 'root/base.html' %}
-{% load static %} {% block title %}
-<title>MovieMon: Moviedex</title>
+
+{% block title %}
+<title>MovieMon: Details</title>
 {%endblock%} {% block content %}
-<div style="text-align: center;">
-  <p>DETAIL</p>
-  <div>
-    <p>{{title}}</p>
-      <img  height="180" src="{{ poster }}"; />
-    <p>{{year}}</p>
-    <p>{{rating}}</p>
-    <p>{{director}}</p>
-    <p>{{actors}}</p>
-    <p>{{plot}}</p>
-    
+<div style="text-align: center; text-transform: lowercase">
+      <img  height="180" class="detail_poster" src="{{ movie.poster }}"; />
+  <div style="text-align: left; text-transform: lowercase">
+    <p>Title: {{ movie.name }}</p>
+    <p>Year: {{ movie.year }}</p>
+    <p>Rating: {{ movie.rating }}</p>
+    <p>Director: {{ movie.director }}</p>
+    <p>Actors: {{ movie.actors}} </p>
+    <p>Plot: {{ movie.synopsis }}</p>
   </div>
 </div>
 

@@ -24,7 +24,7 @@ urlpatterns = [
     path('worldmap/<str:new>', views.worldmap, name='worldmap'),
 
     path('moviedex/', views.moviedex, name='moviedex'),
-    path('detail/', views.detail, name='detail'),
+    path('detail/<int:idx>', views.detail, name='detail'),
 
     path('options/', views.options, name='options'),
     path('options/save_game/<int:slot>', views.save_game, name='save_game'),
@@ -33,7 +33,7 @@ urlpatterns = [
     path('options/load_game/', views.load_game, name='load_game'),
     path('options/load_game/<int:slot>', views.load_game, name='load_game'),
 
-    path('moviedex/<str:moviemon_id>', views.detail, name='detail'),
+    path('moviedex/<int:moviemon_id>', views.moviedex, name='moviedex'),
 
     path('battle/<str:moviemon_id>', views.battle, name='battle'),
 

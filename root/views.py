@@ -10,6 +10,7 @@ be requested once again.
 ◦ B: link to the Load page.
 '''
 import copy
+from math import sqrt, ceil
 
 from django.http import Http404
 
@@ -128,36 +129,28 @@ def battle(request, moviemon_id):
 
 
 def moviedex(request, moviemon_id=0):
-    listdex = Supplier.get_movie()
-    imgs = []
-    titles = []
-    for movie in listdex:
-        titles.append(movie['Title'])
-        imgs.append(movie['Poster'])
-    titles = listdex
+    movies = Supplier.game().caught_moviemons()
+    print(movies)
     actions = {
-        'a': {'url': 'detail'},
+        'right': {'url': 'moviedex', 'par': moviemon_id + 1} if moviemon_id + 1 < len(movies) else None,
+        'left': {'url': 'moviedex', 'par': moviemon_id - 1} if moviemon_id - 1 >= 0 else None,
+        'a': {'url': 'detail', 'par': moviemon_id},
         'b': {'url': 'options'}
     }
-    return Render(request, 'moviedex', {'titles': titles, 'imgs': imgs}, actions=actions)
-    pass
+    return Render(request, 'moviedex',
+                  {'movies': movies,
+                   'selected': movies[moviemon_id] if movies else None,
+                   'height': ceil(sqrt(538 * 450 / Supplier.game().count_moviemons() * 4 / 3))
+                   },
+                  actions=actions)
 
-
-def detail(request, match=0):
-    movies = Supplier.get_movie()
-    title = movies[0]['Title']
-    poster = movies[0]['Poster']
-    year = movies[0]['Year']
-    plot = movies[0]['Plot']
-    actors = movies[0]['Actors']
-    director = movies[0]['Director']
-    rating = movies[0]['imdbRating']
+# TODO: replace idx with uid
+def detail(request, idx=0):
+    movies = Supplier.game().caught_moviemons()
     actions = {
-        'a': {'url': 'detail'},
         'b': {'url': 'moviedex'}
     }
-    return Render(request, 'detail', {'title': title, 'poster': poster, 'year': year
-                                      , 'plot': plot, 'director' : director, 'actors' : actors, 'rating': rating}, actions=actions)
+    return Render(request, 'detail', {'movie': movies[idx]}, actions=actions)
 
 
 

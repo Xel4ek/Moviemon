@@ -7,13 +7,12 @@
 
 {% block content %}
 
-  <p>Moviedex</p>
-  <div>
-      {% for x in imgs %}
-      <div>
-          <img  height="100" src="{{ x }}"; />
-        </div>
-        {% endfor %}
+  <div style="display: flex; flex-wrap: wrap">
+      {% for mov in movies %}
+      <div class="moviedex_preview {% if mov == selected %} moviedex_selected {% endif %}" >
+          <img height="{{ height }}px" src="{{ mov.poster }}" />
+      </div>
+      {% endfor %}
   </div>
   <br/>
   {% if empty %}

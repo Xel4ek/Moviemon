@@ -145,7 +145,7 @@ class Game:
         return self.map.get_size()
 
     def caught_moviemons(self):
-        return [filter(lambda x: x.caught, self.moviemons)]
+        return [item for item in filter(lambda x: x.caught, self.moviemons.values())]
 
     def count_caught_moviemons(self):
         return len([i for i in self.moviemons.values() if i.caught])

@@ -139,16 +139,18 @@ def moviedex(request, action=None):
     elif action != 'back':
         Supplier.selected = 0
 
-    actions = {**{key: {'url': 'moviedex', 'par': key} for key in control},
-               'start': {'url': 'options'},
-               'select': {'url': 'worldmap'},
-               'a': None if len(map_list) == 0 else {'url': 'detail', 'par': map_list[Supplier.selected].id},
-               }
     for item in map_list:
         item.selected = False
     if len(map_list) != 0:
         map_list.sort(key=lambda x: x.time, reverse=True)
         map_list[Supplier.selected].selected = True
+
+    actions = {**{key: {'url': 'moviedex', 'par': key} for key in control},
+               'start': {'url': 'options'},
+               'select': {'url': 'worldmap'},
+               'a': None if len(map_list) == 0 else {'url': 'detail', 'par': map_list[Supplier.selected].id},
+               }
+
 
     settings = {'grid_size_x': size, 'grid_size_y': size, 'map_list': map_list}
     return Render(request, 'moviedex', {'settings': settings}, actions=actions)

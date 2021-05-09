@@ -61,6 +61,11 @@ class Supplier:
     def dump(slot='game.mmg'):
         if slot != 'game.mmg':
             filename = 'slot{}_{}_{}.mmg'.format(slot, Supplier.game.count_moviemons(), Supplier.game.count_caught_moviemons())
+            to_clear = glob.glob('root/save_game/slot{}*.mmg'.format(slot))
+            try:
+                [pathlib.Path(file).unlink() for file in to_clear]
+            except OSError as e:
+                print("Ошибка!")
         else:
             filename = 'root/save_game' + slot
         try:

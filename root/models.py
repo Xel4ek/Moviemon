@@ -223,7 +223,7 @@ class Supplier:
     game = None
     @staticmethod
     def info():
-        files = [filename.split('\\')[-1] for filename in glob.glob("root/save_game/slot*.nmg")]
+        files = [filename.split('\\')[-1] for filename in glob.glob("root/save_game/slot*.mmg")]
         print(files)
         def get_file(slot):
             file = list(filter(lambda x: 'slot' + str(slot) in x, files))
@@ -232,7 +232,7 @@ class Supplier:
 
     @staticmethod
     def load(slot):
-        files = [filename.split('\\')[-1] for filename in glob.glob("root/save_game/slot{}*.nmg".format(slot))]
+        files = [filename.split('\\')[-1] for filename in glob.glob("root/save_game/slot{}*.mmg".format(slot))]
         file = list(filter(lambda x: 'slot' + str(slot) in x, files))
         try:
             with open(pathlib.Path('root', 'save_game', file[0]), 'rb') as f:
@@ -243,7 +243,7 @@ class Supplier:
     @staticmethod
     def dump(slot):
         print(slot)
-        filename = 'slot{}_{}_{}.nmg'.format(slot, Supplier.game.max_balls, Supplier.game.count_balls())
+        filename = 'slot{}_{}_{}.mmg'.format(slot, Supplier.game.max_balls, Supplier.game.count_balls())
         print(filename)
         try:
             with open(pathlib.Path('root', 'save_game', filename), 'wb') as f:

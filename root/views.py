@@ -97,7 +97,6 @@ def worldmap(request, new=None):
         'start': {'url': 'options'},
         'select': {'url': 'moviedex'},
         'a': {'url': 'battle', 'par': moviemon_id} if moviemon_id else None,
-        'b': {'url': 'load_game'}
     }
     return Render(request, 'worldmap', {'settings': settings}, actions=actions)
 
@@ -123,7 +122,8 @@ def battle(request, moviemon_id):
                'you have {} ball(s)'.format(Supplier.game().count_balls()),
                'enemy strength {}'.format(moviemon.rating),
                'chance to win:{}%'.format(Supplier.game().chance(moviemon_id)),
-               'A:Launch movieball']
+               'A:Launch movieball' if not moviemon.caught else '',
+                'B: Back']
     return Render(request, 'battle',
                   {'moviemon': moviemon, 'massage': massage}, actions=actions)
 
@@ -145,7 +145,6 @@ def moviedex(request, moviemon_id=0):
                    },
                   actions=actions)
 
-# TODO: replace idx with uid
 def detail(request, idx=0):
     movies = Supplier.game().caught_moviemons()
     actions = {

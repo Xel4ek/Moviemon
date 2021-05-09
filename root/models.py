@@ -33,6 +33,7 @@ class Supplier:
         'max_moviemons': 15,
         'max_balls': 30
     }
+
     _remote_api = movies.get_movies_list(_settings.get('max_moviemons'))
     game = None
     @staticmethod
@@ -80,6 +81,10 @@ class Supplier:
         pass
 
     @staticmethod
+    def get_caught():
+        return Supplier.game.caught_moviemons()
+
+    @staticmethod
     def new_game():
         Supplier.game = Game([Moviemon.from_movie(movie) for movie in Supplier._remote_api], Supplier.load_default_settings())
 
@@ -94,4 +99,4 @@ class Supplier:
 
     @staticmethod
     def get_movie():
-        pass
+        return Supplier._remote_api

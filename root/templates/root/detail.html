@@ -1,0 +1,17 @@
+{% extends 'root/base.html' %}
+{% load static %} {% block title %}
+<title>MovieMon: Moviedex</title>
+{%endblock%} {% block content %}
+<div style="text-align: center;">
+  <p>DETAIL</p>
+  <div>
+    <p>{{title}}</p>
+      <img  height="180" src={{ poster }}; />
+    <p>{{year}}</p>
+    <p>{{rating}}</p>
+      <p>{{plot}}</p>
+  </div>
+</div>
+
+
+{% endblock %}

@@ -24,6 +24,7 @@ urlpatterns = [
     path('worldmap/<str:new>', views.worldmap, name='worldmap'),
 
     path('moviedex/', views.moviedex, name='moviedex'),
+    path('detail/', views.detail, name='detail'),
 
     path('options/', views.options, name='options'),
     path('options/save_game/<int:slot>', views.save_game, name='save_game'),

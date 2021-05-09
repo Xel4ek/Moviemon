@@ -23,29 +23,29 @@ class Map:
 
     def __init__(self, size):
         self.size = size
-        self.items = [Map.Cell() for i in range(self.size * self.size)]
+        self.items = [Map.Cell() for i in range(self.size[0] * self.size[1])]
 
     def get_size(self):
         return self.size
 
     def cell_content(self, x, y):
-        if x > self.size or y > self.size or x < 0 or y < 0:
+        if x > self.size[0] or y > self.size[1] or x < 0 or y < 0:
             raise IndexError()
-        return self.items[y * self.size + x]
+        return self.items[y * self.size[1] + x]
 
     def get_position(self):
-        for i in range(self.size * self.size):
+        for i in range(self.size[0] * self.size[1]):
             if self.items[i].player:
                 return i
         raise Exception('No player')
 
     def can_move(self, direction):
         player_idx = self.get_position()
-        target_idx = Map._move_map.get(direction)(player_idx, self.size)
-        if target_idx < 0 or target_idx >= self.size * self.size:
+        target_idx = Map._move_map.get(direction)(player_idx, self.size[0])
+        if target_idx < 0 or target_idx >= self.size[0] * self.size[1]:
             return False
-        diff_x = player_idx % self.size - target_idx % self.size
-        diff_y = player_idx // self.size - target_idx // self.size
+        diff_x = player_idx % self.size[0] - target_idx % self.size[0]
+        diff_y = player_idx // self.size[1] - target_idx // self.size[1]
         if diff_x != 0 and diff_y != 0:
             return False
         return True
@@ -53,7 +53,7 @@ class Map:
     def move_player(self, direction):
         player_idx = self.get_position()
         self.items[player_idx].player = False
-        player_idx = Map._move_map.get(direction)(player_idx, self.size)
+        player_idx = Map._move_map.get(direction)(player_idx, self.size[0])
         self.items[player_idx].player = True
 
     def set_cell(self, cell, idx):
@@ -126,7 +126,7 @@ class Game:
 
     def __init__(self, moviemons, settings):
         self.moviemons = {}
-        size = settings.get('grid_size_x')
+        size = (settings.get('grid_size_x'), settings.get('grid_size_y'))
         self.map: Map = Map(size)
         for i in range(0, settings.get('max_balls')):
             self.map.items[i].ball = True
@@ -135,7 +135,7 @@ class Game:
             self.moviemons[moviemon.id] = moviemon
             self.map.items[i + settings.get('max_balls')].moviemon = self.moviemons[moviemon.id]
         random.shuffle(self.map.items)
-        self.map.items[settings.get('start_x') + settings.get('start_y') * size].player = True
+        self.map.items[settings.get('start_x') + settings.get('start_y') * size[0]].player = True
         self.max_balls = settings.get('max_balls')
         self.balls = 0
 
@@ -165,7 +165,7 @@ class Game:
         if self.balls < 1:
             raise Game.NoBallsException()
         self.balls -= 1
-        coin = random.random() * 100
+        coin = random.random() * 10
         if coin < self.chance(moviemon):
             self.moviemons.get(moviemon).catch()
 

@@ -73,21 +73,21 @@ def worldmap(request, new=None):
     if new == 'a' or new == 'b' or new == 'c':
         Supplier.load(new)
     if new in directions:
-        Supplier.game.move(new)
-    map_list = copy.deepcopy(Supplier.game.map.items)
-    context: Map.Cell = Supplier.game.context()
+        Supplier.game().move(new)
+    map_list = copy.deepcopy(Supplier.game().map.items)
+    context: Map.Cell = Supplier.game().context()
     if context.ball:
-        Supplier.game.pick_ball()
+        Supplier.game().pick_ball()
         message = ['A movieball is found']
     if context.moviemon and not context.moviemon.caught:
         message = ['Moviemon flushed out', 'A: Battle']
         moviemon_id = context.moviemon.id
-    if Supplier.game.count_caught_moviemons() == Supplier.game.count_moviemons():
+    if Supplier.game().count_caught_moviemons() == Supplier.game().count_moviemons():
         message = ['Congratulations!', 'Every moviemons was caught']
-    if Supplier.game.balls == 0 and Supplier.game.remaining_balls() == 0:
+    if Supplier.game().balls == 0 and Supplier.game().remaining_balls() == 0:
         message = ['Wasted!', 'You can continue the meaningless', 'existence, but the balls run out']
-    possibility = Supplier.game.can_move
-    settings = {**default, 'map_list': map_list, 'balls': Supplier.game.count_balls(),
+    possibility = Supplier.game().can_move
+    settings = {**default, 'map_list': map_list, 'balls': Supplier.game().count_balls(),
                 'message': message}
     actions = {
         **{direct: {'url': 'worldmap', 'par': direct} if possibility(direct) else None for direct in directions},
@@ -101,25 +101,25 @@ def worldmap(request, new=None):
 
 def battle(request, moviemon_id):
     fight = moviemon_id[-1] == '!'
-    if fight and Supplier.game.count_balls():
+    if fight and Supplier.game().count_balls():
         moviemon_id = moviemon_id.strip('!')
-        Supplier.game.fight(moviemon_id)
+        Supplier.game().fight(moviemon_id)
 
     actions = {
         'start': {'url': 'options'},
         'select': {'url': 'moviedex'},
-        'a': {'url': 'battle', 'par': moviemon_id + '!'} if Supplier.game.count_balls() and
-                                                            not Supplier.game.status(moviemon_id).caught else None,
+        'a': {'url': 'battle', 'par': moviemon_id + '!'} if Supplier.game().count_balls() and
+                                                            not Supplier.game().status(moviemon_id).caught else None,
         'b': {'url': 'worldmap'}
     }
 
-    moviemon = Supplier.game.moviemons.get(moviemon_id)
+    moviemon = Supplier.game().moviemons.get(moviemon_id)
 
-    massage = [ None if not fight else 'You caught it!' if Supplier.game.status(moviemon_id).caught else 'you missed!',
-               'your strength: {}'.format(Supplier.game.get_strength()),
-               'you have {} ball(s)'.format(Supplier.game.count_balls()),
+    massage = [ None if not fight else 'You caught it!' if Supplier.game().status(moviemon_id).caught else 'you missed!',
+               'your strength: {}'.format(Supplier.game().get_strength()),
+               'you have {} ball(s)'.format(Supplier.game().count_balls()),
                'enemy strength {}'.format(moviemon.rating),
-               'chance to win:{}%'.format(Supplier.game.chance(moviemon_id)),
+               'chance to win:{}%'.format(Supplier.game().chance(moviemon_id)),
                'A:Launch movieball']
     return Render(request, 'battle',
                   {'moviemon': moviemon, 'massage': massage}, actions=actions)

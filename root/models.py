@@ -34,7 +34,10 @@ class Supplier:
         'max_balls': 30
     }
     _remote_api = movies.get_movies_list(_settings.get('max_moviemons'))
-    game = None
+    _game = None
+    @staticmethod
+    def game():
+        return Supplier._game if Supplier._game else Supplier.load()
     @staticmethod
     def info():
         files = [filename.split('\\')[-1].split('/')[-1] for filename in glob.glob("root/save_game/slot*.mmg")]
@@ -53,14 +56,14 @@ class Supplier:
             file = ['root/save_game' + slot]
         try:
             with open(pathlib.Path('root', 'save_game', file[0]), 'rb') as f:
-                Supplier.game = pickle.load(f)
+                Supplier._game = pickle.load(f)
         except Exception as e:
             logging.error(e)
 
     @staticmethod
     def dump(slot='game.mmg'):
         if slot != 'game.mmg':
-            filename = 'slot{}_{}_{}.mmg'.format(slot, Supplier.game.count_caught_moviemons(), Supplier.game.count_moviemons())
+            filename = 'slot{}_{}_{}.mmg'.format(slot, Supplier._game.count_caught_moviemons(), Supplier._game.count_moviemons())
             to_clear = glob.glob('root/save_game/slot{}*.mmg'.format(slot))
             try:
                 [pathlib.Path(file).unlink() for file in to_clear]
@@ -70,7 +73,7 @@ class Supplier:
             filename = 'root/save_game' + slot
         try:
             with open(pathlib.Path('root', 'save_game', filename), 'wb') as f:
-                pickle.dump(Supplier.game, f)
+                pickle.dump(Supplier._game, f)
         except Exception as e:
             logging.error(e)
 
@@ -81,7 +84,7 @@ class Supplier:
 
     @staticmethod
     def new_game():
-        Supplier.game = Game([Moviemon.from_movie(movie) for movie in Supplier._remote_api], Supplier.load_default_settings())
+        Supplier._game = Game([Moviemon.from_movie(movie) for movie in Supplier._remote_api], Supplier.load_default_settings())
 
     @staticmethod
     def load_default_settings():

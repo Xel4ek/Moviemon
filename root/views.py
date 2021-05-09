@@ -9,8 +9,10 @@ must be reinitialized with the Settings parameters and the Moviemons must
 be requested once again.
 ◦ B: link to the Load page.
 '''
+import copy
 import random
 
+from .classes import Map
 from .models import Supplier
 from .tools import Render
 
@@ -21,23 +23,22 @@ def index(request):
     return Render(request, context={'help': help_list}, actions=actions).render()
 
 
-def save_game(request, slot=3):
+def save_game(request, slot=0):
     magic = 123
 
     def is_selected(i):
         return slot % 3 == ord(i) - ord('a')
 
-    if slot > 3:
+    if slot > 2 and 3 > slot - magic > 0:
         Supplier.dump(chr(ord('a') + slot - magic))
         slot -= magic
 
     slots = [{'text': 'slot ' + key + ':' + value, 'selected': is_selected(key)} for (key, value) in
-             Supplier.info.items()]
+             Supplier.info().items()]
     help_list = ['a: save', 'b: cancel']
     actions = {
         'up': {'url': 'save_game', 'par': (slot - 1) % 3}, 'down': {'url': 'save_game', 'par': (slot + 1) % 3},
-        'a': {'url': 'save_game', 'par': slot + magic}
-    }
+        'a': {'url': 'save_game', 'par': slot + magic}, 'b': {'url': 'options'}}
 
     return Render(request, 'save', context={'help': help_list, 'slots': slots, 'selected': slot % 3},
                   actions=actions).render()
@@ -47,10 +48,14 @@ def load_game(request, slot=0):
     def is_selected(i):
         return slot % 3 == ord(i) - ord('a')
 
+    def empty():
+        return Supplier.info().get(chr(slot + ord('a'))) == 'free'
+
     slots = [{'text': 'slot ' + key + ':' + value, 'selected': is_selected(key)} for (key, value) in
-             Supplier.info.items()]
+             Supplier.info().items()]
     help_list = ['a: load', 'b: cancel']
-    actions = {'up': {'url': 'load_game', 'par': (slot - 1) % 3}, 'down': {'url': 'load_game', 'par': (slot + 1) % 3}}
+    actions = {'up': {'url': 'load_game', 'par': (slot - 1) % 3}, 'down': {'url': 'load_game', 'par': (slot + 1) % 3},
+               'a': {'url': 'worldmap', 'par': chr(slot + ord('a'))} if not empty() else None, 'b': {'url': 'index'}}
     return Render(request, 'save', context={'help': help_list, 'slots': slots, 'selected': slot % 3},
                   actions=actions).render()
 
@@ -60,23 +65,32 @@ def moviemon(request):
 
 
 def worldmap(request, new=None):
-    default = Supplier.load_default_settings()
-    max_x = default.get('grid_size_x')
-    max_y = default.get('grid_size_y')
-
-    # 'x': n % max_x, 'y': n // max_y,
-    if new:
-        Supplier.new_game()
-
-    map_list = Supplier.game.map.items
-    settings = {**default, 'map_list': map_list, 'balls': 6, 'message': ['Lorem dwadaw ', 'dawdawdawdaw']}
-    # TODO: set moviemon_id on move
+    message = []
     moviemon_id = None
+    default = Supplier.load_default_settings()
+    directions = ['up', 'left', 'right', 'down']
+    if new == 'new':
+        Supplier.new_game()
+    if new == 'a' or new == 'b' or new == 'c':
+        Supplier.load(new)
+    if new in directions:
+        Supplier.game.move(new)
+    map_list = copy.deepcopy(Supplier.game.map.items)
+    context: Map.Cell = Supplier.game.context()
+    if context.ball:
+        Supplier.game.pick_ball()
+        message = ['A movieball is found']
+    if context.moviemon and not context.moviemon.caught:
+        message = ['Moviemon flushed out', 'A: Battle']
+        moviemon_id = context.moviemon.id
+    if Supplier.game.count_caught_moviemons() == Supplier.game.count_moviemons():
+        message = ['Congratulations!', 'Every moviemons was caught']
+    possibility = Supplier.game.can_move
+    settings = {**default, 'map_list': map_list, 'balls': Supplier.game.count_balls(),
+                'message': message}
+    # TODO: set moviemon_id on move
     actions = {
-        'up': {'url': 'worldmap', 'par': 'up'},
-        'down': {'url': 'worldmap', 'par': 'down'},
-        'left': {'url': 'worldmap', 'par': 'left'},
-        'right': {'url': 'worldmap', 'par': 'right'},
+        **{direct: {'url': 'worldmap', 'par': direct} if possibility(direct) else None for direct in directions},
         'start': {'url': 'options'},
         'select': {'url': 'moviedex'},
         'a': {'url': 'battle', 'par': moviemon_id} if moviemon_id else None,
@@ -120,6 +134,6 @@ def options(request):
     # ’A - Save’, ’B - Quit’ as well as ’start - cancel’
     help_list = ['a: save', 'b: quit', 'start: cancel']
     actions = {
-        'a': {'url': 'save_game'}
+        'a': {'url': 'save_game'}, 'b': {'url': 'index'}, 'start': {'url': 'worldmap'}
     }
     return Render(request, context={'help': help_list}, actions=actions).render()

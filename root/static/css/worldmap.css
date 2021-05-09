@@ -21,6 +21,7 @@
     height: 50%;
     background: url(../img/pokemon.png) 100% 100% no-repeat;
     background-size: contain;
+    border: none;
 }
 
 .worldmap .pokemon {
@@ -50,4 +51,5 @@
     flex-direction: column;
     text-align: center;
     gap: 15px;
+    border: none;
 }

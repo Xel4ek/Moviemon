@@ -47,7 +47,7 @@
             <a href="{% url 'root:'|add:select.url %}" class="line-button hoverable" data-label="select"></a>
         {% endif %}
         {% if start == None %}
-            <a href="#" class="line-button disabled" data-label="select"></a>
+            <a href="#" class="line-button disabled" data-label="start"></a>
         {% elif start.par != None %}
             <a href="{% url 'root:'|add:start.url start.par %}" class="line-button hoverable" data-label="start"></a>
         {% else %}

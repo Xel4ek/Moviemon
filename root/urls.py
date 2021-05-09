@@ -22,7 +22,6 @@ urlpatterns = [
 
     path('worldmap/', views.worldmap, name='worldmap'),
     path('worldmap/<str:new>', views.worldmap, name='worldmap'),
-    path('worldmap/<str:new>/<str:action>', views.worldmap, name='worldmap'),
 
     path('moviedex/', views.moviedex, name='moviedex'),
 

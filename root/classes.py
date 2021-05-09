@@ -70,6 +70,16 @@ class Game:
     def info(self):
         return str(self.count_caught_moviemons()) + '/' + str(self.max_balls)
 
+    def move(self, action):
+        if self.can_move(action):
+            return self.map.move_player(action)
+
+    def can_move(self, direct):
+        return self.map.can_move(direct)
+
+    def context(self):
+        return self.map.items[self.map.get_position()]
+
 
 class Moviemon:
 
@@ -147,15 +157,16 @@ class Map:
         for i in range(self.size * self.size):
             if self.items[i].player:
                 return i
+        raise Exception('No player')
 
     def can_move(self, direction):
         player_idx = self.get_position()
         target_idx = Map._move_map.get(direction)(player_idx, self.size)
-        if player_idx < 0 or player_idx > self.size * self.size:
+        if target_idx < 0 or target_idx > self.size * self.size:
             return False
         diff_x = player_idx % self.size - target_idx % self.size
         diff_y = player_idx // self.size - target_idx // self.size
-        if diff_x == diff_y:
+        if diff_x != 0 and diff_y != 0:
             return False
         return True
 
@@ -171,3 +182,4 @@ class Map:
     def pick_ball(self):
         player_idx = self.get_position()
         self.items[player_idx].ball = False
+

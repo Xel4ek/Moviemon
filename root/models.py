@@ -1,6 +1,9 @@
 import logging
+import pathlib
 import pickle
 import random
+import glob
+import re
 
 from django.db import models
 
@@ -217,38 +220,36 @@ class Supplier:
          "BoxOffice": "$202,359,711", "Production": "Plan B Films, 2DUX2",
          "Website": "N/A", "Response": "True"},
     ]
-    info = {'a': 'free', 'b' : 'free', 'c' : 'free'}
     game = None
+    @staticmethod
+    def info():
+        files = [filename.split('\\')[-1] for filename in glob.glob("root/save_game/slot*.nmg")]
+        print(files)
+        def get_file(slot):
+            file = list(filter(lambda x: 'slot' + str(slot) in x, files))
+            return '/'.join(file[0].split('.')[0].split('_')[1:3][::-1]) if len(file) else 'free'
+        return {key: get_file(key) for key in ['a', 'b', 'c']}
 
     @staticmethod
     def load(slot):
+        files = [filename.split('\\')[-1] for filename in glob.glob("root/save_game/slot{}*.nmg".format(slot))]
+        file = list(filter(lambda x: 'slot' + str(slot) in x, files))
         try:
-            with open('db.db', 'rb') as f:
-                temp: dict = pickle.load(f)
-                for (slot, game) in temp.items():
-                    Supplier.info[slot] = game.info() if game else 'free'
-                Supplier.game = temp.get(slot)
+            with open(pathlib.Path('root', 'save_game', file[0]), 'rb') as f:
+                Supplier.game = pickle.load(f)
         except Exception as e:
             logging.error(e)
 
     @staticmethod
     def dump(slot):
         print(slot)
-        pickler: dict = {}
+        filename = 'slot{}_{}_{}.nmg'.format(slot, Supplier.game.max_balls, Supplier.game.count_balls())
+        print(filename)
         try:
-            with open('db.db', 'rb') as f:
-                pickler = pickle.load(f)
-        except FileNotFoundError or EOFError as e:
-            print(e)
-
-        try:
-            with open('db.db', 'wb') as f:
-                pickler[slot] = Supplier.game
-                pickle.dump(pickler, f)
+            with open(pathlib.Path('root', 'save_game', filename), 'wb') as f:
+                pickle.dump(Supplier.game, f)
         except Exception as e:
             logging.error(e)
-        for (slot, game) in pickler.items():
-            Supplier.info[slot] = game.info() if game else 'free'
 
     @staticmethod
     def get_random_movie():

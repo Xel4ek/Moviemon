@@ -7,7 +7,7 @@ from django.db import models
 # Create your models here.
 from django.http import Http404
 
-from . import db
+from . import db, movies
 from .classes import Game, Moviemon
 
 '''
@@ -30,7 +30,7 @@ class Supplier:
         'max_moviemons': 10,
         'max_balls': 30
     }
-
+    remote_api = movies.get_movies_list()
     _remote_api = [
         {"Title": "Monster", "Year": "2003", "Rated": "R",
          "Released": "30 Jan 2004", "Runtime": "109 min",

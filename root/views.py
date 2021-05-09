@@ -149,13 +149,15 @@ def detail(request, match=0):
     poster = movies[0]['Poster']
     year = movies[0]['Year']
     plot = movies[0]['Plot']
+    actors = movies[0]['Actors']
+    director = movies[0]['Director']
     rating = movies[0]['imdbRating']
     actions = {
         'a': {'url': 'detail'},
         'b': {'url': 'options'}
     }
     return Render(request, 'detail', {'title': title, 'poster': poster, 'year': year
-                                      , 'plot': plot, 'rating': rating}, actions=actions)
+                                      , 'plot': plot, 'director' : director, 'actors' : actors, 'rating': rating}, actions=actions)
 
 
 

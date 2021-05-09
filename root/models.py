@@ -5,7 +5,7 @@ import random
 from django.db import models
 
 # Create your models here.
-from . import db
+from . import db , movies
 
 '''
 • ’load’: Load the game data passed in parameters in the class instance. Returns the
@@ -22,7 +22,8 @@ intance.
 class Supplier:
     __settings = db.db.get('settings')
 
-    remote_api = [
+    remote_api = movies.get_movies_list()
+    remote_api1 = [
         {"Title": "Monster", "Year": "2003", "Rated": "R",
          "Released": "30 Jan 2004", "Runtime": "109 min",
          "Genre": "Biography, Crime, Drama, Thriller",

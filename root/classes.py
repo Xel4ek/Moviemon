@@ -171,7 +171,7 @@ class Game:
         if self.balls < 1:
             raise Game.NoBallsException()
         self.balls -= 1
-        coin = random.random() * 100
+        coin = random.random()
         if coin < self.chance(moviemon):
             self.moviemons.get(moviemon).catch()
 

@@ -86,7 +86,7 @@ def worldmap(request, new=None):
         moviemon_id = context.moviemon.id
     if Supplier.game.count_caught_moviemons() == Supplier.game.count_moviemons():
         message = ['Congratulations!', 'Every moviemons was caught']
-    if Supplier.game.balls == 0 and Supplier.game.count_balls() == 0:
+    if Supplier.game.balls == 0 and Supplier.game.remaining_balls() == 0:
         message = ['Wasted!',  'You can continue the meaningless', 'existence, but the balls run out']
     possibility = Supplier.game.can_move
     settings = {**default, 'map_list': map_list, 'balls': Supplier.game.count_balls(),

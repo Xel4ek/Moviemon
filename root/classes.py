@@ -189,4 +189,6 @@ class Game:
     def context(self):
         return self.map.items[self.map.get_position()]
 
+    def remaining_balls(self):
+        return len([i for i in self.map.items if i.ball])
 

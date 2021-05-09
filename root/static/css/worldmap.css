@@ -10,12 +10,20 @@
     background: url("../img/player.png") 0 100% no-repeat;
     background-size: contain;
 }
-.worldmap > div {
+.display {
+    height: 100%;
+    position: relative;
+    }
+.display > img {
+    height: 100%;
+    margin: auto;
+}
+.display > div {
     position: relative;
     border: 1px dashed #575757;
 }
 
-.worldmap .ball {
+.display .ball {
     margin-left: auto;
     width: 50%;
     height: 50%;
@@ -24,23 +32,24 @@
     border: none;
 }
 
-.worldmap .pokemon {
+.display .pokemon {
     margin-left: auto;
     width: 50%;
     height: 50%;
     background: url(../img/monsters/monster-robots-cartoon-scary-monsters-11563234289qxptal4dqj.png) 100% 100% no-repeat;
     background-size: contain;
 }
-.worldmap .balls {
+.display .balls {
     font-family: 'Itim', cursive;
     position: absolute;
     right: 5px;
     top: 0;
     font-size: 20px;
     color: orange;
+    border: none;
 }
 
-.worldmap .info {
+.display .info {
     font-family: 'Itim', cursive;
     position: absolute;
     top: 50%;

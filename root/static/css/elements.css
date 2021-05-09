@@ -117,7 +117,7 @@
 
 .hoverable {
     cursor: pointer;
-    transition: all .3s;
+    transition: box-shadow .3s;
 
 }
 .hoverable:hover, .hoverable:active  {

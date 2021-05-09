@@ -1,0 +1,22 @@
+.battle {
+    display: flex;
+    border: none;
+        font-weight: bold;
+    font-size: 17px;
+    text-transform: lowercase;
+}
+.battle:first-child{
+    flex: 1 1 auto;
+}
+.battle .info_block {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    height: 100%;
+}
+.battle .info_block:first-child {
+    padding-bottom: .5rem;
+}
+.battle .info_block:last-child {
+    align-self: flex-end;
+}

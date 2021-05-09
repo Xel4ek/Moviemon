@@ -88,7 +88,6 @@ def worldmap(request, new=None):
     possibility = Supplier.game.can_move
     settings = {**default, 'map_list': map_list, 'balls': Supplier.game.count_balls(),
                 'message': message}
-    # TODO: set moviemon_id on move
     actions = {
         **{direct: {'url': 'worldmap', 'par': direct} if possibility(direct) else None for direct in directions},
         'start': {'url': 'options'},
@@ -99,20 +98,28 @@ def worldmap(request, new=None):
     return Render(request, 'worldmap', {'settings': settings}, actions=actions)
 
 
-def battle(request, moviemon_id, throw=None):
-    def is_fight_sucess() -> bool:
-        pass
-
-    if throw:
-        is_fight_sucess()
+def battle(request, moviemon_id):
+    fight = moviemon_id[-1] == '!'
+    if fight and Supplier.game.count_balls():
+        moviemon_id = moviemon_id.strip('!')
+        Supplier.game.fight(moviemon_id)
 
     actions = {
         'start': {'url': 'options'},
         'select': {'url': 'moviedex'},
-        'a': {'url': 'battle', 'par': 1},
-        'b': {'url': 'load_game'}
+        'a': {'url': 'battle', 'par': moviemon_id + '!'} if Supplier.game.count_balls() and
+                                                            not Supplier.game.status(moviemon_id).caught else None,
+        'b': {'url': 'worldmap'}
     }
-    return Render(request, 'battle', actions=actions)
+
+    moviemon = Supplier.game.moviemons.get(moviemon_id)
+
+    massage = ['hello',
+               'your strength: {}'.format(Supplier.game.get_strength()),
+               'you have {} ball(s)'.format(Supplier.game.count_balls()),
+               'chance to win:{}%'.format(Supplier.game.chance(moviemon_id)), 'A:Launch movieball']
+    return Render(request, 'battle',
+                  {'moviemon': moviemon, 'massage': massage}, actions=actions)
 
 
 def moviedex(request, moviemon_id):

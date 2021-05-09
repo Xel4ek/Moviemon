@@ -8,10 +8,10 @@
     </style>
     {% endblock settings %}
 {% block content %}
-<div class="worldmap">
+<div class="worldmap display">
     {% for item in settings.map_list %}
         <div {% if item.player %} class="player" {% endif %}>
-        {% if item.moviemon != None and item.player and item.moviemon.caught == False %}
+        {% if item.moviemon != None and not item.moviemon.caught %}
             <div class="pokemon"></div>
         {% endif %}
         {% if item.ball and item.player %}

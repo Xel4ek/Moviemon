@@ -29,11 +29,11 @@ class Supplier:
     selected = 0
     _settings = {
         'start_x': 1,
-        'start_y': 8,
-        'grid_size_x': 10,
-        'grid_size_y': 10,
-        'max_moviemons': 15,
-        'max_balls': 30,
+        'start_y': 10,
+        'grid_size_x': 12,
+        'grid_size_y': 12,
+        'max_moviemons': 16,
+        'max_balls': 42,
         'low': 4,
         'high': 4,
     }

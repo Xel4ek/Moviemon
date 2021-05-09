@@ -17,7 +17,6 @@ class Render:
         self.route = route
         self.actions = actions if actions else {}
         self.context = context if context else {}
-        # self.settings = Supplier.load_default_settings()
 
     def add_context(self, context: dict):
         self.context = {*self.context, *context}

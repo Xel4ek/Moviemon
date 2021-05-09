@@ -3,11 +3,11 @@
     height: 450px;
     display: grid;
     grid: repeat(var(--sizeX), auto) / repeat(var(--sizeY), auto);
-    background: url("../img/B062NZ-IEAAOhd9.jpg") 0 100% no-repeat;
-    background-size: contain;
+    background: url("../img/background1.jpg") 0 100% no-repeat;
+    background-size: cover;
 }
 .worldmap .player {
-    background: url("../img/player.png") 0 100% no-repeat;
+    background: url("../img/ghostbuster-peter-dance-3.png") 0 100% no-repeat;
     background-size: contain;
 }
 .display {
@@ -28,7 +28,7 @@
     margin-left: auto;
     width: 50%;
     height: 50%;
-    background: url(../img/pokemon.png) 100% 100% no-repeat;
+    background: url(../img/pokeball.png) 100% 100% no-repeat;
     background-size: contain;
     border: none;
 }
@@ -37,7 +37,7 @@
     margin-left: auto;
     width: 50%;
     height: 50%;
-    background: url(../img/monsters/monster-robots-cartoon-scary-monsters-11563234289qxptal4dqj.png) 100% 100% no-repeat;
+    background: url(../img/monsters/monster5.png) 100% 100% no-repeat;
     background-size: contain;
 }
 .display .balls {

@@ -2,7 +2,7 @@
     height: 45px;
     width: 45px;
     border-radius: 50%;
-    background: linear-gradient(-45deg, rgba(144, 21, 105, 0.81), rgba(196, 43, 192, 0.15));
+    background: linear-gradient(-45deg, rgba(144, 21, 105, 0.81), rgba(196, 43, 192, 0.60));
     box-shadow: 3px 4px 5px 0 rgba(0, 0, 0, .31), -5px -5px 4px 0 rgba(255, 255, 255, .26);
     position: relative;
 }
@@ -16,14 +16,14 @@
     border-radius: 10px;
     background: linear-gradient(
             360deg, rgba(74, 65, 198, 0.81), rgba(11, 35, 85, 0.15));
-    box-shadow: 3px 4px 5px 0 rgba(0, 0, 0, .31), -5px -5px 4px 0 rgba(255, 255, 255, .26);
+    box-shadow: 3px 4px 5px 0 rgba(0, 0, 0, .31);
     position: relative;
 }
 
 .line-button::after {
     content: attr(data-label);
     position: absolute;
-    font-family: 'Permanent Marker', cursive;
+    font-family: 'Major Mono Display', monospace;
     font-size: 16px;
     color: #1f1e56;
     text-shadow: -2px -1px 3px #7e7e7e78;
@@ -34,9 +34,11 @@
 .round-button::after {
     content: attr(data-label);
     position: absolute;
-    font-family: 'Permanent Marker', cursive;
+    font-family: 'Major Mono Display', cursive;
     transform: rotate(289deg);
     font-size: 36px;
+    text-transform: lowercase;
+    font-weight: bolder;
     color: #1f1e56;
     text-shadow: -2px -1px 3px #7e7e7e78;
     left: 47px;
@@ -126,8 +128,7 @@
 
 .disabled {
     cursor: pointer;
-    background: linear-gradient(
-            360deg, rgba(167, 167, 167, 0.81), rgba(80, 80, 80, 0.15));
+    background: rgba(80, 80, 80, 0.80);
 }
 
 .moviedex_preview {

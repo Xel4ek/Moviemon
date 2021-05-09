@@ -8,6 +8,9 @@
 {% block content %}
 
   <div style="display: flex; flex-wrap: wrap">
+      {% if empty %}
+          <div style="position:absolute;">Go and capture something! </div>
+      {% endif %}
       {% for mov in movies %}
       <div class="moviedex_preview {% if mov == selected %} moviedex_selected {% endif %}" >
           <img height="{{ height }}px" src="{{ mov.poster }}" />
@@ -15,10 +18,8 @@
       {% endfor %}
   </div>
   <br/>
-  {% if empty %}
-    <div style="position:absolute;">Go and capture something! </div>
-  {% endif %}
   <br/>
 
 
+    <div>b - back</div>
 {% endblock %}

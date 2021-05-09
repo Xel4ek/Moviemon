@@ -9,12 +9,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Itim&display=swap');
 @font-face {
-    font-family: 'Pokemon';
-    src: url("../fonts/Pokemon Solid.ttf");
+    font-family: 'GrinchedRegular';
+    src: url("../fonts/GrinchedRegular.otf") format("opentype");
 }
 @font-face {
-    font-family: 'Pokemon-Hollow';
-    src: url("../fonts/Pokemon Hollow.ttf");
+    font-family: 'GrinchedRegular';
+    src: url("../fonts/GrinchedRegular.otf") format("opentype");
 }
 
 body {

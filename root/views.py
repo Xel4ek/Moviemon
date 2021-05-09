@@ -134,13 +134,14 @@ def moviedex(request, moviemon_id=0):
     actions = {
         'right': {'url': 'moviedex', 'par': moviemon_id + 1} if moviemon_id + 1 < len(movies) else None,
         'left': {'url': 'moviedex', 'par': moviemon_id - 1} if moviemon_id - 1 >= 0 else None,
-        'a': {'url': 'detail', 'par': moviemon_id},
+        'a': {'url': 'detail', 'par': moviemon_id} if len(movies) > 0 else None,
         'b': {'url': 'options'}
     }
     return Render(request, 'moviedex',
                   {'movies': movies,
                    'selected': movies[moviemon_id] if movies else None,
-                   'height': ceil(sqrt(538 * 450 / Supplier.game().count_moviemons() * 4 / 3))
+                   'height': ceil(sqrt(538 * 450 / Supplier.game().count_moviemons() * 4 / 3)),
+                   'empty': len(movies) == 0,
                    },
                   actions=actions)
 

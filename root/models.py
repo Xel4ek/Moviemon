@@ -41,7 +41,7 @@ class Supplier:
         print(files)
         def get_file(slot):
             file = list(filter(lambda x: 'slot' + str(slot) in x, files))
-            return '/'.join(file[0].split('.')[0].split('_')[1:3][::-1]) if len(file) else 'free'
+            return '/'.join(file[0].split('.')[0].split('_')[1:3]) if len(file) else 'free'
         return {key: get_file(key) for key in ['a', 'b', 'c']}
 
     @staticmethod
@@ -60,7 +60,7 @@ class Supplier:
     @staticmethod
     def dump(slot='game.mmg'):
         if slot != 'game.mmg':
-            filename = 'slot{}_{}_{}.mmg'.format(slot, Supplier.game.count_moviemons(), Supplier.game.count_caught_moviemons())
+            filename = 'slot{}_{}_{}.mmg'.format(slot, Supplier.game.count_caught_moviemons(), Supplier.game.count_moviemons())
             to_clear = glob.glob('root/save_game/slot{}*.mmg'.format(slot))
             try:
                 [pathlib.Path(file).unlink() for file in to_clear]

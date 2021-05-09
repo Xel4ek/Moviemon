@@ -10,7 +10,6 @@ be requested once again.
 ◦ B: link to the Load page.
 '''
 import copy
-import random
 
 from .classes import Map
 from .models import Supplier

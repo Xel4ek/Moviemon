@@ -47,7 +47,7 @@ class Supplier:
     @staticmethod
     def load(slot='game.mmg'):
         if slot != 'game.mmg':
-            files = [filename.split('\\')[-1] for filename in glob.glob("root/save_game/slot{}*.mmg".format(slot))]
+            files = [filename.split('\\')[-1].split('/')[-1] for filename in glob.glob("root/save_game/slot{}*.mmg".format(slot))]
             file = list(filter(lambda x: 'slot' + str(slot) in x, files))
         else:
             file = ['root/save_game' + slot]

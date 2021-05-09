@@ -1,17 +1,21 @@
 import random
+
 import requests
 from django.conf import settings
 
 
-def get_movies_ids(number):
-    ids = settings.MOVIES
-    movies_ids = random.choices(ids, k=number)
-    return movies_ids
+def get_movies_ids(number, low, high):
+    movies_low = random.sample(settings.MOVIES_LOW, k=low)
+    movies_high = random.choices(settings.MOVIES_HIGH, k=high)
+    movies_other = random.choices(
+        list(set(settings.MOVIES) - set(movies_high) - set(movies_low)),
+        k=(number - low - high))
+    return movies_other + movies_high + movies_low
 
 
-def get_movies_list(size=15):
+def get_movies_list(size, low, high):
     movies_list = []
-    movies = get_movies_ids(size)
+    movies = get_movies_ids(size, low, high)
     for id_movie in movies:
         movie = get_movie(id_movie)
         if movie != -1:

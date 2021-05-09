@@ -32,11 +32,16 @@ class Supplier:
         'grid_size_x': 10,
         'grid_size_y': 10,
         'max_moviemons': 15,
-        'max_balls': 30
+        'max_balls': 30,
+        'low': 4,
+        'high': 4,
     }
 
     _debug = False
-    _remote_api = movies.get_movies_list(_settings.get('max_moviemons'))
+    _remote_api = movies.get_movies_list(
+        _settings.get('max_moviemons'),
+        _settings.get('low'),
+        _settings.get('high'))
     _game = None
 
     @staticmethod

@@ -124,3 +124,12 @@ STATIC_URL = '/static/'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Movies Imdb ID
+
+MOVIES = ['tt0078748', 'tt1396484', 'tt0340855', 'tt2784512', 'tt3297314', 'tt1663655', 'tt0120841', 'tt9173418',
+          'tt0437179', 'tt0440803', 'tt0374563', 'tt0192731', 'tt0455857', 'tt0282209', 'tt5690360']
+
+# Get a new key here
+# https://www.omdbapi.com/apikey.aspx
+OMBD_API_KEY = "4c82f8b8"

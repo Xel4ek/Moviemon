@@ -131,6 +131,8 @@ MOVIE = ['tt0078748', 'tt1396484', 'tt0340855', 'tt2784512', 'tt3297314', 'tt166
           'tt0437179', 'tt0440803', 'tt0374563', 'tt0192731', 'tt0455857', 'tt0282209', 'tt5690360']
 
 MOVIES = open("root/static/movies/moviesId", "r").read().replace('\n', ',').split(',')
+MOVIES_LOW = open("root/static/movies/moviesId_low", "r").read().split(',')
+MOVIES_HIGH = open("root/static/movies/moviesId_high", "r").read().split(',')
 
 # Get a new key here
 # https://www.omdbapi.com/apikey.aspx

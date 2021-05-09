@@ -118,6 +118,8 @@ class Game:
         'start_y': 2,
         'map_x': 10,
         'map_y': 10,
+        'low': 4,
+        'high': 4,
     """
     class NoBallsException(Exception):
         def __init__(self):

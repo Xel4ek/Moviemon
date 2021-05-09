@@ -66,7 +66,7 @@ def moviemon(request):
 def worldmap(request, new=None):
     message = []
     moviemon_id = None
-    default = Supplier.load_default_settings()
+    default = Supplier.size()
     directions = ['up', 'left', 'right', 'down']
     if new == 'new':
         Supplier.new_game()

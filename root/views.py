@@ -130,6 +130,9 @@ def moviedex(request, action=None):
     control = ['up', 'left', 'right', 'down']
     map_list = [item for item in Supplier.get_movie().values()]
     size = math.ceil(math.sqrt(Supplier.game().count_moviemons()))
+    if len(map_list) != 0:
+        map_list[Supplier.selected].selected = True
+        map_list.sort(key=lambda x: x.time, reverse=True)
     selected = Supplier.selected
     if action in control:
         selected = Map.move_map.get(action)(selected, size)
@@ -145,9 +148,6 @@ def moviedex(request, action=None):
                }
     for item in map_list:
         item.selected = False
-    if len(map_list) != 0:
-        map_list[Supplier.selected].selected = True
-        map_list.sort(key=lambda x: x.time, reverse=True)
     settings = {'grid_size_x': size, 'grid_size_y': size, 'map_list': map_list}
     return Render(request, 'moviedex', {'settings': settings}, actions=actions)
 

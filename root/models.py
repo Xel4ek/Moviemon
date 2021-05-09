@@ -36,7 +36,7 @@ class Supplier:
     _remote_api = movies.get_movies_list(_settings.get('max_moviemons'))
     _game = None
     @staticmethod
-    def game():
+    def game() -> Game:
         return Supplier._game if Supplier._game else Supplier.load()
     @staticmethod
     def info():
@@ -53,7 +53,7 @@ class Supplier:
             files = [filename.split('\\')[-1].split('/')[-1] for filename in glob.glob("root/save_game/slot{}*.mmg".format(slot))]
             file = list(filter(lambda x: 'slot' + str(slot) in x, files))
         else:
-            file = ['root/save_game' + slot]
+            file = [slot]
         try:
             with open(pathlib.Path('root', 'save_game', file[0]), 'rb') as f:
                 Supplier._game = pickle.load(f)
@@ -70,7 +70,7 @@ class Supplier:
             except OSError as e:
                 print("Ошибка!")
         else:
-            filename = 'root/save_game' + slot
+            filename = slot
         try:
             with open(pathlib.Path('root', 'save_game', filename), 'wb') as f:
                 pickle.dump(Supplier._game, f)
@@ -93,7 +93,7 @@ class Supplier:
 
     @staticmethod
     def get_strength():
-        pass
+        return Supplier.game().strength()
 
     @staticmethod
     def get_movie():

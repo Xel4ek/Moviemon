@@ -95,7 +95,6 @@ def worldmap(request, new=None):
         'start': {'url': 'options'},
         'select': {'url': 'moviedex'} if 0 != Supplier.game().count_caught_moviemons() else None,
         'a': {'url': 'battle', 'par': moviemon_id} if moviemon_id else None,
-        'b': {'url': 'load_game'}
     }
     return Render(request, 'worldmap', {'settings': settings}, actions=actions)
 

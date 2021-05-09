@@ -5,7 +5,10 @@ import random
 from django.db import models
 
 # Create your models here.
+from django.http import Http404
+
 from . import db
+from .classes import Game, Moviemon
 
 '''
 • ’load’: Load the game data passed in parameters in the class instance. Returns the
@@ -20,9 +23,15 @@ intance.
 
 
 class Supplier:
-    __settings = db.db.get('settings')
+    _settings = {
+        'start_x': 2,
+        'start_y': 2,
+        'size': 10,
+        'max_moviemons': 10,
+        'max_balls': 30
+    }
 
-    remote_api = [
+    _remote_api = [
         {"Title": "Monster", "Year": "2003", "Rated": "R",
          "Released": "30 Jan 2004", "Runtime": "109 min",
          "Genre": "Biography, Crime, Drama, Thriller",
@@ -208,23 +217,38 @@ class Supplier:
          "BoxOffice": "$202,359,711", "Production": "Plan B Films, 2DUX2",
          "Website": "N/A", "Response": "True"},
     ]
-
+    info = {'a': 'free', 'b' : 'free', 'c' : 'free'}
+    game = None
 
     @staticmethod
-    def load():
+    def load(slot):
         try:
-            with open('db.db', 'r') as f:
-                return pickle.load(f)
+            with open('db.db', 'rb') as f:
+                temp: dict = pickle.load(f)
+                for (slot, game) in temp.items():
+                    Supplier.info[slot] = game.info() if game else 'free'
+                Supplier.game = temp.get(slot)
         except Exception as e:
             logging.error(e)
 
     @staticmethod
-    def dump(game):
+    def dump(slot):
+        print(slot)
+        pickler: dict = {}
         try:
-            with open('db.db', 'w')as f:
-                pickle.dump(game, f)
+            with open('db.db', 'rb') as f:
+                pickler = pickle.load(f)
+        except FileNotFoundError or EOFError as e:
+            print(e)
+
+        try:
+            with open('db.db', 'wb') as f:
+                pickler[slot] = Supplier.game
+                pickle.dump(pickler, f)
         except Exception as e:
             logging.error(e)
+        for (slot, game) in pickler.items():
+            Supplier.info[slot] = game.info() if game else 'free'
 
     @staticmethod
     def get_random_movie():
@@ -232,13 +256,15 @@ class Supplier:
 
     @staticmethod
     def new_game():
-        idxs = random.sample(range(1, len(Supplier.remote_api)), Supplier.__settings.get("max_moviemons"))
-
+        idxs = random.sample(range(1, len(Supplier._remote_api)), Supplier._settings.get("max_moviemons"))
+        moviemons = [Moviemon.from_movie(Supplier._remote_api[i]) for i in idxs]
+        # TODO check grid_size_x
+        Supplier.game = Game(moviemons, Supplier.load_default_settings())
 
     @staticmethod
     def load_default_settings():
-        return {'grid_size_x': Supplier.__settings.get('size'), 'grid_size_y': Supplier.__settings.get('size'),
-                'start_x': Supplier.__settings.get('start_x'), 'start_y': Supplier.__settings.get('start_y')}
+        return {'grid_size_x': Supplier._settings.get('size'), 'grid_size_y': Supplier._settings.get('size'),
+                **Supplier._settings}
 
     @staticmethod
     def get_strength():

@@ -20,18 +20,29 @@ class Game:
     """
 
     class NoBallsException(Exception):
-        raise Exception("Muahaha! You've got no balls!")
+        def __init__(self):
+            super().__init__("Muahaha! You've got no balls!")
 
-    def __init__(self, map, balls, moviemons):
-        self.map: Map = map
-        self.balls = balls
-        self.moviemons = moviemons
+    def __init__(self, moviemons, settings):
+        self.moviemons = {}
+        size = settings.get('grid_size_x')
+        self.map: Map = Map(size)
+        for i in range(0, settings.get('max_balls')):
+            self.map.items[i].ball = True
+        for i in range(0, len(moviemons)):
+            moviemon = moviemons[i]
+            self.moviemons[moviemon.id] = moviemon
+            self.map.items[i + settings.get('max_balls')].moviemon = self.moviemons[moviemon.id]
+        random.shuffle(self.map.items)
+        self.map.items[settings.get('start_x') + settings.get('start_y') * size].player = True
+        self.max_balls = settings.get('max_balls')
+        self.balls = 0
 
     def get_map_size(self):
         return self.map.get_size()
 
     def count_caught_moviemons(self):
-        return len([i for i in self.moviemons if i.caught])
+        return len([i for i in self.moviemons.values() if i.caught])
 
     def count_moviemons(self):
         return len(self.moviemons)
@@ -56,6 +67,9 @@ class Game:
         self.balls += 1
         self.map.pick_ball()
 
+    def info(self):
+        return str(self.count_caught_moviemons()) + '/' + str(self.max_balls)
+
 
 class Moviemon:
 
@@ -75,6 +89,26 @@ class Moviemon:
 
     def strength(self):
         return self.rating
+
+    @staticmethod
+    def from_movie(movie):
+        '''
+        EXAMPLE
+        "Title": "Dark", "Year": "2017–2020", "Rated": "TV-MA",
+        "Released": "01 Dec 2017", "Runtime": "60 min",
+        "Genre": "Crime, Drama, Mystery, Sci-Fi, Thriller", "Director": "N/A",
+        "Writer": "Baran bo Odar, Jantje Friese",
+        "Actors": "Louis Hofmann, Karoline Eichhorn, Lisa Vicari, Maja Schöne",
+        "Plot": "A family saga with a supernatural twist, set in a German town, where the disappearance of two young children exposes the relationships among four families.",
+        "Language": "German", "Country": "Germany, USA",
+        "Awards": "6 wins & 20 nominations.",
+        "Poster": "https://m.media-amazon.com/images/M/MV5BOTk2NzUyOTctZDdlMS00MDJlLTgzNTEtNzQzYjFhNjA0YjBjXkEyXkFqcGdeQXVyMjg1NDcxNDE@._V1_SX300.jpg",
+        "Ratings": [{"Source": "Internet Movie Database", "Value": "8.8/10"}],
+        "Metascore": "N/A", "imdbRating": "8.8", "imdbVotes": "294,486",
+        "imdbID": "tt5753856", "Type": "series", "totalSeasons": "3",
+        "Response": "True"'''
+        return Moviemon(movie.get('Title'), movie.get('Poster'), movie.get('Director'), movie.get('Released'),
+                        movie.get('Ratings'), movie.get('Plot'), movie.get('Actors'))
 
 
 class Map:
@@ -137,6 +171,3 @@ class Map:
     def pick_ball(self):
         player_idx = self.get_position()
         self.items[player_idx].ball = False
-
-
-

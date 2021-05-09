@@ -11,7 +11,7 @@
 <div class="worldmap">
     {% for item in settings.map_list %}
         <div {% if item.player %} class="player" {% endif %}>
-        {% if item.pokemon %}
+        {% if item.moviemon != None %}
             <div class="pokemon"></div>
         {% endif %}
         {% if item.ball %}

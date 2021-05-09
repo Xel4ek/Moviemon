@@ -133,7 +133,7 @@ def moviedex(request, moviemon_id=0):
         'right': {'url': 'moviedex', 'par': moviemon_id + 1} if moviemon_id + 1 < len(movies) else None,
         'left': {'url': 'moviedex', 'par': moviemon_id - 1} if moviemon_id - 1 >= 0 else None,
         'a': {'url': 'detail', 'par': moviemon_id} if len(movies) > 0 else None,
-        'b': {'url': 'options'}
+        'select': {'url': 'worldmap'}
     }
     return Render(request, 'moviedex',
                   {'movies': movies,

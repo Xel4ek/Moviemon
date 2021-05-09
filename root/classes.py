@@ -42,7 +42,7 @@ class Map:
     def can_move(self, direction):
         player_idx = self.get_position()
         target_idx = Map._move_map.get(direction)(player_idx, self.size)
-        if target_idx < 0 or target_idx > self.size * self.size:
+        if target_idx < 0 or target_idx >= self.size * self.size:
             return False
         diff_x = player_idx % self.size - target_idx % self.size
         diff_y = player_idx // self.size - target_idx // self.size

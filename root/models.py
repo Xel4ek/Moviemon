@@ -27,8 +27,8 @@ intance.
 
 class Supplier:
     _settings = {
-        'start_x': 2,
-        'start_y': 2,
+        'start_x': 1,
+        'start_y': 8,
         'size': 10,
         'max_moviemons': 15,
         'max_balls': 30

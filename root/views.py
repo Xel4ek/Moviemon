@@ -154,7 +154,7 @@ def detail(request, match=0):
     rating = movies[0]['imdbRating']
     actions = {
         'a': {'url': 'detail'},
-        'b': {'url': 'options'}
+        'b': {'url': 'moviedex'}
     }
     return Render(request, 'detail', {'title': title, 'poster': poster, 'year': year
                                       , 'plot': plot, 'director' : director, 'actors' : actors, 'rating': rating}, actions=actions)

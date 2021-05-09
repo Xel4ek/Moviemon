@@ -6,10 +6,12 @@
     <title>{{title|default:'Game'}}</title>
     <link rel="stylesheet" href="{% static 'css/base.css' %}" />
     <link rel="shortcut icon" type="image/png" href="{% static 'favicon.ico' %}"/>
+    <!-- <link rel="shortcut icon" type="image/png" href="{% static 'img/pixelpoke.jpeg' %}"/> -->
     {% block settings %}
     {% endblock settings %}
 </head>
-<body>
+<body style="background-image: url({% static 'img/back6.jpg' %}")>
+<!-- <body style="background-image: url({% static 'img/back5.jpg' %}")> -->
 <div class="wrapper">
     <div class="content element">
         <main class="neumorphic--pressed">

@@ -231,9 +231,12 @@ class Supplier:
         return {key: get_file(key) for key in ['a', 'b', 'c']}
 
     @staticmethod
-    def load(slot):
-        files = [filename.split('\\')[-1] for filename in glob.glob("root/save_game/slot{}*.mmg".format(slot))]
-        file = list(filter(lambda x: 'slot' + str(slot) in x, files))
+    def load(slot='game.mmg'):
+        if slot != 'game.mmg':
+            files = [filename.split('\\')[-1] for filename in glob.glob("root/save_game/slot{}*.mmg".format(slot))]
+            file = list(filter(lambda x: 'slot' + str(slot) in x, files))
+        else:
+            file = ['root/save_game' + slot]
         try:
             with open(pathlib.Path('root', 'save_game', file[0]), 'rb') as f:
                 Supplier.game = pickle.load(f)
@@ -241,15 +244,17 @@ class Supplier:
             logging.error(e)
 
     @staticmethod
-    def dump(slot):
-        print(slot)
-        filename = 'slot{}_{}_{}.mmg'.format(slot, Supplier.game.max_balls, Supplier.game.count_balls())
-        print(filename)
+    def dump(slot='game.mmg'):
+        if slot != 'game.mmg':
+            filename = 'slot{}_{}_{}.mmg'.format(slot, Supplier.game.max_balls, Supplier.game.count_balls())
+        else:
+            filename = 'root/save_game' + slot
         try:
             with open(pathlib.Path('root', 'save_game', filename), 'wb') as f:
                 pickle.dump(Supplier.game, f)
         except Exception as e:
             logging.error(e)
+
 
     @staticmethod
     def get_random_movie():

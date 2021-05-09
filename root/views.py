@@ -19,7 +19,7 @@ from .tools import Render
 
 def index(request):
     help_list = ['a: new game', 'b: load']
-    actions = {'a': {'url': 'worldmap', 'par': 'new'}, 'b': {'url': 'load_game', 'par': 0}}
+    actions = {'a': {'url': 'worldmap', 'par': 'new'}, 'b': {'url': 'load_game'}}
     return Render(request, context={'help': help_list}, actions=actions).render()
 
 
@@ -29,7 +29,7 @@ def save_game(request, slot=0):
     def is_selected(i):
         return slot % 3 == ord(i) - ord('a')
 
-    if slot > 2 and 3 > slot - magic > 0:
+    if slot > 2 and 3 > slot - magic >= 0:
         Supplier.dump(chr(ord('a') + slot - magic))
         slot -= magic
 
@@ -45,13 +45,14 @@ def save_game(request, slot=0):
 
 
 def load_game(request, slot=0):
+
     def is_selected(i):
         return slot % 3 == ord(i) - ord('a')
 
     def empty():
         return Supplier.info().get(chr(slot + ord('a'))) == 'free'
 
-    slots = [{'text': 'slot ' + key + ':' + value, 'selected': is_selected(key)} for (key, value) in
+    slots = [{'text': 'slot {}:{} '.format(key, value), 'selected': is_selected(key)} for (key, value) in
              Supplier.info().items()]
     help_list = ['a: load', 'b: cancel']
     actions = {'up': {'url': 'load_game', 'par': (slot - 1) % 3}, 'down': {'url': 'load_game', 'par': (slot + 1) % 3},
@@ -85,6 +86,8 @@ def worldmap(request, new=None):
         moviemon_id = context.moviemon.id
     if Supplier.game.count_caught_moviemons() == Supplier.game.count_moviemons():
         message = ['Congratulations!', 'Every moviemons was caught']
+    if Supplier.game.balls == 0 and Supplier.game.count_balls() == 0:
+        message = ['Wasted!',  'You can continue the meaningless', 'existence, but the balls run out']
     possibility = Supplier.game.can_move
     settings = {**default, 'map_list': map_list, 'balls': Supplier.game.count_balls(),
                 'message': message}

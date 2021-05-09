@@ -30,7 +30,7 @@ urlpatterns = [
     path('options/save_game/', views.save_game, name='save_game'),
 
     path('options/load_game/', views.load_game, name='load_game'),
-    path('options/load_game/<str:slot>', views.load_game, name='load_game'),
+    path('options/load_game/<int:slot>', views.load_game, name='load_game'),
 
     path('moviedex/<str:moviemon_id>', views.detail, name='detail'),
 

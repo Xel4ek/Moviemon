@@ -26,5 +26,6 @@ class Render:
         self.actions = {*self.actions, *added}
 
     def render(self):
+        Supplier.dump()
         return render(self.request, 'root/' + self.route + '.html',
                       {'controls': render_to_string('root/controls.html', self.actions), **self.context})

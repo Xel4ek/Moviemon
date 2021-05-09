@@ -5,7 +5,7 @@ from django.conf import settings
 
 def get_movies_ids(number):
     ids = settings.MOVIES
-    movies_ids= random.choices(ids, k=number)
+    movies_ids = random.choices(ids, k=number)
     return movies_ids
 
 

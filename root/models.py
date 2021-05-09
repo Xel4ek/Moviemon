@@ -33,7 +33,7 @@ class Supplier:
         'max_moviemons': 10,
         'max_balls': 30
     }
-    remote_api = movies.get_movies_list()
+    remote_api = movies.get_movies_list(15)
     _remote_api = [
         {"Title": "Monster", "Year": "2003", "Rated": "R",
          "Released": "30 Jan 2004", "Runtime": "109 min",

@@ -2,20 +2,5 @@ Python Django Rush00
 
 Current Omdb Key = 4c82f8b8
 
-List of Movies for Rush00 by ImdbID and Title
+List of Movies by ImdbID in static/movies/movies_id
 
-	tt0078748 Alien
-	tt1396484 It
-	tt0340855 monster
-	tt2784512 Zombeavers
-	tt3297314 Evil Dead 2
-	tt1663655 Martyrs
-	tt0120841 Species2
-	tt9173418 Brahms
-	tt0437179 See no evil
-	tt0440803 Shutter
-	tt0374563 Capivity
-	tt0192731 Urban leyends
-	tt0455857 When a stranger calls
-	tt0282209 Darknes falls
-	tt5690360 Slender man

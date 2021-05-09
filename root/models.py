@@ -30,7 +30,7 @@ class Supplier:
         'start_x': 2,
         'start_y': 2,
         'size': 10,
-        'max_moviemons': 10,
+        'max_moviemons': 15,
         'max_balls': 30
     }
     _remote_api = movies.get_movies_list(_settings.get('max_moviemons'))

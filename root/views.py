@@ -150,8 +150,6 @@ def moviedex(request, action=None):
                'select': {'url': 'worldmap'},
                'a': None if len(map_list) == 0 else {'url': 'detail', 'par': map_list[Supplier.selected].id},
                }
-
-
     settings = {'grid_size_x': size, 'grid_size_y': size, 'map_list': map_list}
     return Render(request, 'moviedex', {'settings': settings}, actions=actions)
 

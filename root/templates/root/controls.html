@@ -2,52 +2,52 @@
     <div class="button__block-1">
         <div></div>
         {% if up == None %}
-            <a href="#" class="big-button  big-button-up disabled"></a>
+            <a href="#" class="big-button  big-button-up disabled" id="up"></a>
         {% elif up.par != None %}
-            <a href="{% url 'root:'|add:up.url up.par %}" class="big-button  big-button-up hoverable"></a>
+            <a href="{% url 'root:'|add:up.url up.par %}" class="big-button  big-button-up hoverable" id="up"></a>
         {% else %}
-            <a href="{% url 'root:'|add:up.url %}" class="big-button  big-button-up hoverable"></a>
+            <a href="{% url 'root:'|add:up.url %}" class="big-button  big-button-up hoverable" id="up"></a>
         {% endif %}
         <div></div>
 
         {% if left == None %}
-            <a href="#" class="big-button big-button-left disabled"></a>
+            <a href="#" class="big-button big-button-left disabled" id="left"></a>
         {% elif left.par != None %}
-            <a href="{% url 'root:'|add:left.url left.par %}" class="big-button  big-button-left hoverable"></a>
+            <a href="{% url 'root:'|add:left.url left.par %}" class="big-button  big-button-left hoverable" id="left"></a>
         {% else %}
-            <a href="{% url 'root:'|add:left.url %}" class="big-button  big-button-left hoverable"></a>
+            <a href="{% url 'root:'|add:left.url %}" class="big-button  big-button-left hoverable" id="left"></a>
         {% endif %}
 
         <a class="big-button  big-button-center"></a>
 
         {% if right == None %}
-            <a href="#" class="big-button big-button-right disabled"></a>
+            <a href="#" class="big-button big-button-right disabled" id="right"></a>
         {% elif right.par != None %}
-            <a href="{% url 'root:'|add:right.url right.par %}" class="big-button  big-button-right hoverable"></a>
+            <a href="{% url 'root:'|add:right.url right.par %}" class="big-button  big-button-right hoverable" id="right"></a>
         {% else %}
-            <a href="{% url 'root:'|add:right.url %}" class="big-button  big-button-right hoverable"></a>
+            <a href="{% url 'root:'|add:right.url %}" class="big-button  big-button-right hoverable" id="right"></a>
         {% endif %}
         <div></div>
         {% if down == None %}
-            <a href="#" class="big-button big-button-right disabled"></a>
+            <a href="#" class="big-button big-button-right disabled" id="down"></a>
         {% elif down.par != None %}
-            <a href="{% url 'root:'|add:down.url down.par %}" class="big-button  big-button-down hoverable"></a>
+            <a href="{% url 'root:'|add:down.url down.par %}" class="big-button  big-button-down hoverable" id="down"></a>
         {% else %}
-            <a href="{% url 'root:'|add:down.url %}" class="big-button  big-button-down hoverable"></a>
+            <a href="{% url 'root:'|add:down.url %}" class="big-button  big-button-down hoverable" id="down"></a>
         {% endif %}
         <div></div>
 
     </div>
     <div class="button__block-2">
         {% if select == None %}
-            <a href="#" class="line-button disabled" data-label="select"></a>
+            <a href="#" class="line-button disabled" data-label="select" id="select"></a>
         {% elif select.par != None %}
-            <a href="{% url 'root:'|add:select.url select.par %}" class="line-button hoverable" data-label="select"></a>
+            <a href="{% url 'root:'|add:select.url select.par %}" class="line-button hoverable" data-label="select" id="select"></a>
         {% else %}
-            <a href="{% url 'root:'|add:select.url %}" class="line-button hoverable" data-label="select"></a>
+            <a href="{% url 'root:'|add:select.url %}" class="line-button hoverable" data-label="select" id="select"></a>
         {% endif %}
         {% if start == None %}
-            <a href="#" class="line-button disabled" data-label="start"></a>
+            <a href="#" class="line-button disabled" data-label="start" id="start"></a>
         {% elif start.par != None %}
             <a href="{% url 'root:'|add:start.url start.par %}" class="line-button hoverable" data-label="start"></a>
         {% else %}
@@ -56,18 +56,18 @@
     </div>
     <div class="button__block-3">
         {% if a == None %}
-            <a href="#" class="round-button disabled" data-label="A"></a>
+            <a href="#" class="round-button disabled" data-label="A" id="a"></a>
         {% elif a.par != None %}
-            <a href="{% url 'root:'|add:a.url a.par %}" class="round-button hoverable" data-label="A"></a>
+            <a href="{% url 'root:'|add:a.url a.par %}" class="round-button hoverable" data-label="A" id="a"></a>
         {% else %}
-            <a href="{% url 'root:'|add:a.url %}" class="round-button hoverable" data-label="A"></a>
+            <a href="{% url 'root:'|add:a.url %}" class="round-button hoverable" data-label="A" id="a"></a>
         {% endif %}
         {% if b == None %}
-            <a href="#" class="round-button disabled" data-label="B"></a>
+            <a href="#" class="round-button disabled" data-label="B" id="b"></a>
         {% elif b.par != None %}
-            <a href="{% url 'root:'|add:b.url b.par %}" class="round-button hoverable" data-label="B"></a>
+            <a href="{% url 'root:'|add:b.url b.par %}" class="round-button hoverable" data-label="B" id="b"></a>
         {% else %}
-            <a href="{% url 'root:'|add:b.url %}" class="round-button hoverable" data-label="B"></a>
+            <a href="{% url 'root:'|add:b.url %}" class="round-button hoverable" data-label="B" id="b"></a>
         {% endif %}
     </div>
 </div>

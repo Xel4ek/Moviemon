@@ -2,7 +2,7 @@
     position: relative;
     height: 450px;
     display: grid;
-    grid: repeat(var(--sizeX), auto) / repeat(var(--sizeY), auto);
+    grid: repeat(var(--sizeX), 1fr) / repeat(var(--sizeY), 1fr);
     background: url("../img/B062NZ-IEAAOhd9.jpg") 0 100% no-repeat;
     background-size: contain;
 }
@@ -16,6 +16,7 @@
     }
 .display > img {
     height: 95%;
+    max-width: 100%;
     margin: auto;
     border-radius: 5px;
 }

@@ -26,6 +26,7 @@ intance.
 
 
 class Supplier:
+    selected = 0
     _settings = {
         'start_x': 1,
         'start_y': 8,
@@ -47,7 +48,7 @@ class Supplier:
 
     @staticmethod
     def info():
-        files = [filename.split('\\')[-1].split('/')[-1] for filename in glob.glob("root/save_game/slot*.mmg")]
+        files = [filename.split('\\')[-1].split('/')[-1] for filename in glob.glob("root/saved_game/slot*.mmg")]
 
         def get_file(slot):
             file = list(filter(lambda x: 'slot' + str(slot) in x, files))
@@ -59,22 +60,24 @@ class Supplier:
     def load(slot='game.mmg'):
         if slot != 'game.mmg':
             files = [filename.split('\\')[-1].split('/')[-1] for filename in
-                     glob.glob("root/save_game/slot{}*.mmg".format(slot))]
+                     glob.glob("root/saved_game/slot{}*.mmg".format(slot))]
             file = list(filter(lambda x: 'slot' + str(slot) in x, files))
         else:
             file = [slot]
         try:
-            with open(pathlib.Path('root', 'save_game', file[0]), 'rb') as f:
+            with open(pathlib.Path('root', 'saved_game', file[0]), 'rb') as f:
                 Supplier._game = pickle.load(f)
         except Exception as e:
             logging.error(e)
 
     @staticmethod
     def dump(slot='game.mmg'):
+        if not Supplier._game:
+            return
         if slot != 'game.mmg':
             filename = 'slot{}_{}_{}.mmg'.format(slot, Supplier._game.count_caught_moviemons(),
                                                  Supplier._game.count_moviemons())
-            to_clear = glob.glob('root/save_game/slot{}*.mmg'.format(slot))
+            to_clear = glob.glob('root/saved_game/slot{}*.mmg'.format(slot))
             try:
                 [pathlib.Path(file).unlink() for file in to_clear]
             except OSError as e:
@@ -82,7 +85,7 @@ class Supplier:
         else:
             filename = slot
         try:
-            with open(pathlib.Path('root', 'save_game', filename), 'wb') as f:
+            with open(pathlib.Path('root', 'saved_game', filename), 'wb') as f:
                 pickle.dump(Supplier._game, f)
         except Exception as e:
             logging.error(e)
@@ -94,16 +97,11 @@ class Supplier:
     @staticmethod
     def new_game():
         return Supplier.load_default_settings()
-        # Supplier._game = Game([Moviemon.from_movie(movie) for movie in Supplier._remote_api],
-        #                       Supplier.load_default_settings())
 
     @staticmethod
     def load_default_settings():
         Supplier._game = Game([Moviemon.from_movie(movie) for movie in Supplier._remote_api], Supplier._settings)
         return Supplier._game
-
-    # return {'grid_size_x': Supplier._settings.get('size'), 'grid_size_y': Supplier._settings.get('size'),
-    #         **Supplier._settings}
 
     @staticmethod
     def get_strength():
@@ -111,4 +109,4 @@ class Supplier:
 
     @staticmethod
     def get_movie():
-        pass
+        return {item.moviemon.id: item.moviemon for item in filter(lambda x: x.moviemon and   x.moviemon.caught, Supplier._game.map.items)}

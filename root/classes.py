@@ -7,7 +7,7 @@ class Map:
         'position_y': 0,
     """
 
-    _move_map = {
+    move_map = {
         'up': lambda x, size: x - size,
         'down': lambda x, size: x + size,
         'left': lambda x, size: x - 1,
@@ -41,7 +41,7 @@ class Map:
 
     def can_move(self, direction):
         player_idx = self.get_position()
-        target_idx = Map._move_map.get(direction)(player_idx, self.size[0])
+        target_idx = Map.move_map.get(direction)(player_idx, self.size[0])
         if target_idx < 0 or target_idx >= self.size[0] * self.size[1]:
             return False
         diff_x = player_idx % self.size[0] - target_idx % self.size[0]
@@ -53,7 +53,7 @@ class Map:
     def move_player(self, direction):
         player_idx = self.get_position()
         self.items[player_idx].player = False
-        player_idx = Map._move_map.get(direction)(player_idx, self.size[0])
+        player_idx = Map.move_map.get(direction)(player_idx, self.size[0])
         self.items[player_idx].player = True
 
     def set_cell(self, cell, idx):
@@ -119,7 +119,6 @@ class Game:
         'map_x': 10,
         'map_y': 10,
     """
-
     class NoBallsException(Exception):
         def __init__(self):
             super().__init__("Muahaha! You've got no balls!")
@@ -165,7 +164,7 @@ class Game:
         if self.balls < 1:
             raise Game.NoBallsException()
         self.balls -= 1
-        coin = random.random() * 10
+        coin = random.random() * 1
         if coin < self.chance(moviemon):
             self.moviemons.get(moviemon).catch()
 

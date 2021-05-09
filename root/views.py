@@ -10,8 +10,9 @@ be requested once again.
 ◦ B: link to the Load page.
 '''
 import copy
+import math
 
-from .classes import Map
+from .classes import Map, Moviemon
 from .models import Supplier
 from .tools import Render
 
@@ -115,7 +116,7 @@ def battle(request, moviemon_id):
 
     moviemon = Supplier.game().moviemons.get(moviemon_id)
 
-    massage = [ None if not fight else 'You caught it!' if Supplier.game().status(moviemon_id).caught else 'you missed!',
+    massage = [None if not fight else 'You caught it!' if Supplier.game().status(moviemon_id).caught else 'you missed!',
                'your strength: {}'.format(Supplier.game().get_strength()),
                'you have {} ball(s)'.format(Supplier.game().count_balls()),
                'enemy strength {}'.format(moviemon.rating),
@@ -125,23 +126,43 @@ def battle(request, moviemon_id):
                   {'moviemon': moviemon, 'massage': massage}, actions=actions)
 
 
-def moviedex(request, moviemon_id):
+def moviedex(request, action=None):
+    control = ['up', 'left', 'right', 'down']
+    map_list = [item for item in Supplier.get_movie().values()]
+    size = math.ceil(math.sqrt(Supplier.game().count_moviemons()))
+    selected = Supplier.selected
+    if action in control:
+        selected = Map.move_map.get(action)(selected, size)
+        if 0 <= selected < len(map_list):
+            Supplier.selected = selected
+    elif action != 'back':
+        Supplier.selected = 0
+
+    actions = {**{key: {'url': 'moviedex', 'par': key} for key in control},
+               'start': {'url': 'options'},
+               'select': {'url': 'worldmap'},
+               'a': {'url': 'detail', 'par': map_list[Supplier.selected].id},
+               }
+    for item in map_list:
+        item.selected = False
+    map_list[Supplier.selected].selected = True
+    settings = {'grid_size_x': size, 'grid_size_y': size, 'map_list': map_list}
+    return Render(request, 'moviedex', {'settings': settings}, actions=actions)
+
+
+def detail(request, moviemon_id):
     actions = {
-        'left': {'url': 'worldmap', 'par': 'left'},
-        'right': {'url': 'worldmap', 'par': 'right'},
-        'start': {'url': 'options'},
-        'select': {'url': 'worldmap'},
-        'a': {'url': 'moviedex', 'par': moviemon_id} if moviemon_id else None,
+        'b': {'url': 'moviedex', 'par': 'back'}
     }
-    return Render(request, 'worldmap', {'settings': settings}, actions=actions)
 
-
-def detail(request):
-    pass
+    moviemon: Moviemon = Supplier.game().moviemons.get(moviemon_id)
+    massage = [moviemon.name, 'by {}'.format(moviemon.director), 'at {}'.format(moviemon.year),
+               'imdb: {}'.format(moviemon.rating), moviemon.synopsis, moviemon.actors]
+    return Render(request, 'details',
+                  {'moviemon': moviemon, 'massage': massage}, actions=actions)
 
 
 def options(request):
-    # ’A - Save’, ’B - Quit’ as well as ’start - cancel’
     help_list = ['a: save', 'b: quit', 'start: cancel']
     actions = {
         'a': {'url': 'save_game'}, 'b': {'url': 'index'}, 'start': {'url': 'worldmap'}

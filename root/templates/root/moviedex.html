@@ -1,0 +1,18 @@
+{% extends 'root/base.html' %}
+    {% block settings %}
+         <style>
+        :root {
+            --sizeX:{{ settings.grid_size_x }};
+            --sizeY:{{ settings.grid_size_y }};
+        }
+    </style>
+    {% endblock settings %}
+{% block content %}
+<div class="moviedex worldmap display">
+    {% for item in settings.map_list %}
+        <div class="moviedex__info {% if item.selected %} selected {% endif %}" >
+            <img src="{{ item.poster }}" alt=""/>
+        </div>
+    {% endfor %}
+</div>
+{% endblock content %}

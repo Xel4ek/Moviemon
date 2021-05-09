@@ -1,0 +1,15 @@
+.moviedex__info > img{
+    max-width: 100%;
+    margin: auto;
+    border-radius: 5px;
+}
+.moviedex__info {
+    background: gray;
+    margin: 0 22%;
+    padding: 1% 2%;
+    border: none !important;
+    border-radius: 5px;
+}
+.moviedex .selected {
+    background: #1f1e56;
+}

@@ -93,7 +93,7 @@ def worldmap(request, new=None):
     actions = {
         **{direct: {'url': 'worldmap', 'par': direct} if possibility(direct) else None for direct in directions},
         'start': {'url': 'options'},
-        'select': {'url': 'moviedex'},
+        'select': {'url': 'moviedex'} if 0 != Supplier.game().count_caught_moviemons() else None,
         'a': {'url': 'battle', 'par': moviemon_id} if moviemon_id else None,
         'b': {'url': 'load_game'}
     }
@@ -141,11 +141,13 @@ def moviedex(request, action=None):
     actions = {**{key: {'url': 'moviedex', 'par': key} for key in control},
                'start': {'url': 'options'},
                'select': {'url': 'worldmap'},
-               'a': {'url': 'detail', 'par': map_list[Supplier.selected].id},
+               'a': None if len(map_list) == 0 else {'url': 'detail', 'par': map_list[Supplier.selected].id},
                }
     for item in map_list:
         item.selected = False
-    map_list[Supplier.selected].selected = True
+    if len(map_list) != 0:
+        map_list[Supplier.selected].selected = True
+        map_list.sort(key=lambda x: x.time, reverse=True)
     settings = {'grid_size_x': size, 'grid_size_y': size, 'map_list': map_list}
     return Render(request, 'moviedex', {'settings': settings}, actions=actions)
 
@@ -157,7 +159,7 @@ def detail(request, moviemon_id):
 
     moviemon: Moviemon = Supplier.game().moviemons.get(moviemon_id)
     massage = [moviemon.name, 'by {}'.format(moviemon.director), 'at {}'.format(moviemon.year),
-               'imdb: {}'.format(moviemon.rating), moviemon.synopsis, moviemon.actors]
+               'imdb: {}'.format(moviemon.rating), moviemon.synopsis, moviemon.actors, 'b:back']
     return Render(request, 'details',
                   {'moviemon': moviemon, 'massage': massage}, actions=actions)
 

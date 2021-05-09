@@ -1,6 +1,9 @@
 import random
 import uuid
 
+from django.utils.datetime_safe import datetime
+
+
 class Map:
     """
         'position_x': 0,
@@ -75,8 +78,10 @@ class Moviemon:
         self.synopsis = synopsis
         self.actors = actors
         self.caught = False
+        self.time = datetime.now()
 
     def catch(self):
+        self.time = datetime.now()
         self.caught = True
 
     def strength(self):

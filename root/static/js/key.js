@@ -18,7 +18,7 @@ function keys() {
         if (event.code === 'KeyA' || event.code === 'ArrowLeft') {
             window.location.href = left;
         }
-        if (event.code === 'KeyD' || event.code === 'ArrowRihth') {
+        if (event.code === 'KeyD' || event.code === 'ArrowRight') {
             window.location.href = right;
         }
         if (event.code === 'Space') {
